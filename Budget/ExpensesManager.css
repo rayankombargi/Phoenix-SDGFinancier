@@ -1,0 +1,194 @@
+/* Main container for the expenses manager */
+.expenses-manager {
+  width: 100%;
+  margin: 0 0 2rem 0;
+  background: var(--light, #ffffff);
+  border-radius: 16px;
+  box-shadow: var(--shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Category filter styling */
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter label {
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+.filter select {
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+/* Main table styling */
+.expenses-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--light);
+  border-radius: 8px;
+}
+
+.table-header-row {
+  background: #f2f2f2;
+}
+
+.expenses-table th,
+.expenses-table td {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--primary);
+  vertical-align: middle;
+}
+
+.expense-row:hover {
+  background-color: #fafafa;
+}
+
+/* Ensure row borders are continuous from Date to Actions */
+.expenses-table tr {
+  border-bottom: 1px solid #ddd; /* Continuous row line */
+}
+
+/* Ensure last row does not have an extra bottom border */
+.expenses-table tr:last-child {
+  border-bottom: none;
+}
+
+/* Action buttons in each row */
+.row-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.edit-btn,
+.remove-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, border 0.3s ease;
+}
+
+.edit-btn {
+  background-color: var(--secondary);
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #019875;
+  transform: scale(1.03);
+}
+
+.remove-btn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.03);
+}
+
+/* Pagination controls */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--secondary);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+/* Fix column width alignment */
+.expenses-table th:nth-child(1),
+.expenses-table td:nth-child(1) {
+  width: 150px;
+}
+
+.expenses-table th:nth-child(2),
+.expenses-table td:nth-child(2) {
+  width: 200px;
+}
+
+.expenses-table th:nth-child(3),
+.expenses-table td:nth-child(3) {
+  width: 120px;
+}
+
+.expenses-table th:nth-child(4),
+.expenses-table td:nth-child(4) {
+  width: 180px;
+}
+
+.expenses-table th:nth-child(5),
+.expenses-table td:nth-child(5) {
+  width: 220px;
+}
+
+/* Ensure row lines extend across the entire row */
+.expenses-table td,
+.expenses-table th {
+  border-top: none;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+/* Add right-side border to Actions column */
+.expenses-table th:nth-child(5),
+.expenses-table td:nth-child(5) {
+  border-right: 1px solid #ddd;
+}
+
+/* Remove extra bottom border from the last row */
+.expenses-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Example theme variables if not defined globally */
+:root {
+  --primary: #2d3436;
+  --secondary: #00b894;
+  --light: #ffffff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
