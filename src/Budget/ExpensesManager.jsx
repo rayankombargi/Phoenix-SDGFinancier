@@ -1,8 +1,7 @@
-// components/ExpensesManager.jsx
 import React, { useState } from 'react';
-import { motion, AnimatePresence} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import './ExpensesManager.css';
-import EditExpense from './EditExpense'
+import EditExpense from './EditExpense';
 
 // Dummy data for demonstration
 const dummyExpenses = [
@@ -17,12 +16,9 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
   const [expenses, setExpenses] = useState(initialExpenses);
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
-  const [expenseToEdit, setExpenseToEdit] = useState(null)
+  const [expenseToEdit, setExpenseToEdit] = useState(null);
+  const [isEditing, setIsEditing] = useState(false); 
   const itemsPerPage = 10;
-
-  // Remove expense by ID
-
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleRemoveExpense = (id) => {
     const updated = expenses.filter((exp) => exp.id !== id);
@@ -33,11 +29,11 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
   const handleEditExpense = (id) => {
     const expense = expenses.find((exp) => exp.id === id);
     setExpenseToEdit(expense);
-    setIsEditing(true);
+    setIsEditing(true); 
   };
 
   const handleEditSave = (updatedExpense) => {
-    const updatedExpenses = expenses.map((exp) => 
+    const updatedExpenses = expenses.map((exp) =>
       exp.id === updatedExpense.id ? updatedExpense : exp
     );
     setExpenses(updatedExpenses);
@@ -47,31 +43,30 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
   };
 
   const handleEditCancel = () => {
-    setIsEditing(false);
-    setExpenseToEdit(null)
+    setIsEditing(false); 
+    setExpenseToEdit(null);
   };
 
-  // Filter logic
   const handleCategoryChange = (e) => {
     setCategoryFilter(e.target.value);
     setCurrentPage(1);
   };
 
-  // Filtered and paginated data
   const filteredExpenses = categoryFilter === 'All'
     ? expenses
     : expenses.filter((exp) => exp.category === categoryFilter);
 
-  const totalPages = Math.ceil(filteredExpenses.length / itemsPerPage);
+  const totalPages = filteredExpenses.length === 0 ? 0 : Math.ceil(filteredExpenses.length / itemsPerPage);
+
   const currentExpenses = filteredExpenses.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Pagination controls
   const handlePreviousPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
+
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
@@ -150,11 +145,16 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           Previous
         </button>
-        <span>Page {currentPage} of {totalPages}</span>
+        <span>
+          {totalPages === 0
+            ? 'Page 0 of 0' 
+            : `Page ${currentPage} of ${totalPages}`}
+        </span>
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next
         </button>
       </div>
+
       <AnimatePresence>
         {isEditing && (
           <EditExpense
