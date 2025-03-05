@@ -66,12 +66,21 @@ function EditExpense({initialData, onSave, onCancel}) {
             </label>
             <label>
                 Category:
-                <input 
-                name="category" 
-                type="text" 
-                value={formData.category} 
-                onChange={handleChange} 
-                />
+                <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                >
+                    <option value="Debts & Loans">Debts & Loans</option>
+                    <option value="Savings & Investments">Savings & Investments</option>
+                    <option value="Shopping & Lifestyle">Shopping & Lifestyle</option>
+                    <option value="Food & Dining">Food & Dining</option>
+                    <option value="Health & Wellness">Health & Wellness</option>
+                    <option value="Travel & Leisure">Travel & Leisure</option>
+                    <option value="Education & Self-Development">Education & Self-Development</option>
+                    <option value="Giving & Charity">Giving & Charity</option>
+                    <option value="Other">Other</option>
+                </select>
             </label>
             <div className="actions">
                 <button className='save-btn' type="submit">Save</button>

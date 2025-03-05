@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ExpensesManager.css';
 import EditExpense from './EditExpense';
+import { ExpensesContext } from '../contexts/ExpensesContext';
 
-// Dummy data for demonstration
-const dummyExpenses = [
-  { id: 1, name: 'Groceries', cost: 120, date: '2025-02-10', category: 'Food & Dining' },
-  { id: 2, name: 'Loan Payment', cost: 300, date: '2025-02-11', category: 'Debts & Loans' },
-  { id: 3, name: 'Restaurant', cost: 60, date: '2025-02-11', category: 'Food & Dining' },
-  { id: 4, name: 'Cinema', cost: 50, date: '2025-02-12', category: 'Travel & Leisure' },
-  { id: 5, name: 'Textbooks', cost: 100, date: '2025-02-12', category: 'Education & Self-Development' },
-];
-
-function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) {
-  const [expenses, setExpenses] = useState(initialExpenses);
+function ExpensesManager({ onExpensesChange }) {
+  const { expenses, setExpenses } = useContext(ExpensesContext);
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [expenseToEdit, setExpenseToEdit] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); 
+  const [isEditing, setIsEditing] = useState(false);
   const itemsPerPage = 10;
 
   const handleRemoveExpense = (id) => {
@@ -29,7 +21,7 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
   const handleEditExpense = (id) => {
     const expense = expenses.find((exp) => exp.id === id);
     setExpenseToEdit(expense);
-    setIsEditing(true); 
+    setIsEditing(true);
   };
 
   const handleEditSave = (updatedExpense) => {
@@ -43,7 +35,7 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
   };
 
   const handleEditCancel = () => {
-    setIsEditing(false); 
+    setIsEditing(false);
     setExpenseToEdit(null);
   };
 
@@ -52,11 +44,13 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
     setCurrentPage(1);
   };
 
-  const filteredExpenses = categoryFilter === 'All'
-    ? expenses
-    : expenses.filter((exp) => exp.category === categoryFilter);
+  const filteredExpenses =
+    categoryFilter === 'All'
+      ? expenses
+      : expenses.filter((exp) => exp.category === categoryFilter);
 
-  const totalPages = filteredExpenses.length === 0 ? 0 : Math.ceil(filteredExpenses.length / itemsPerPage);
+  const totalPages =
+    filteredExpenses.length === 0 ? 0 : Math.ceil(filteredExpenses.length / itemsPerPage);
 
   const currentExpenses = filteredExpenses.slice(
     (currentPage - 1) * itemsPerPage,
@@ -80,11 +74,7 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
     >
       <div className="filter">
         <label htmlFor="category-filter">Filter by Category:</label>
-        <select
-          id="category-filter"
-          value={categoryFilter}
-          onChange={handleCategoryChange}
-        >
+        <select id="category-filter" value={categoryFilter} onChange={handleCategoryChange}>
           <option value="All">All</option>
           <option value="Debts & Loans">Debts & Loans</option>
           <option value="Savings & Investments">Savings & Investments</option>
@@ -122,16 +112,10 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
                 <td>{expense.cost}</td>
                 <td>{expense.category}</td>
                 <td className="row-actions">
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEditExpense(expense.id)}
-                  >
+                  <button className="edit-btn" onClick={() => handleEditExpense(expense.id)}>
                     Edit
                   </button>
-                  <button
-                    className="remove-btn"
-                    onClick={() => handleRemoveExpense(expense.id)}
-                  >
+                  <button className="remove-btn" onClick={() => handleRemoveExpense(expense.id)}>
                     Remove
                   </button>
                 </td>
@@ -146,9 +130,7 @@ function ExpensesManager({ initialExpenses = dummyExpenses, onExpensesChange }) 
           Previous
         </button>
         <span>
-          {totalPages === 0
-            ? 'Page 0 of 0' 
-            : `Page ${currentPage} of ${totalPages}`}
+          {totalPages === 0 ? 'Page 0 of 0' : `Page ${currentPage} of ${totalPages}`}
         </span>
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next
