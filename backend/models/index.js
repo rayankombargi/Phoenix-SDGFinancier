@@ -14,20 +14,36 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 // Import models
 const User = require('./user')(sequelize);
-const Expense = require('./expense')(sequelize);
+const Expense = require('./expenseModel')(sequelize);
 const Category = require('./category')(sequelize);
 const Budget = require('./budget')(sequelize);
 const Reward = require('./reward')(sequelize);
 const SustainabilityFactor = require('./sustainabilityFactor')(sequelize);
 const SustainabilityMetric = require('./sustainabilityMetric')(sequelize);
+const SustainabilityQuestion = require('./sustainabilityQuestion')(sequelize);
+const ExpenseAnswer = require('./expenseAnswer')(sequelize);
 
-// Define associations
-Expense.belongsTo(Category, { as: 'category', foreignKey: 'category_id' });
+// Associations
+
+// Expense to Category
+Expense.belongsTo(Category, { as: 'category', foreignKey: 'category_id', constraints: false });
+Category.hasMany(Expense, { as: 'expenses', foreignKey: 'category_id' });
+
+// Category to SustainabilityFactor
 Category.hasOne(SustainabilityFactor, { as: 'sustainabilityFactor', foreignKey: 'category_id' });
+SustainabilityFactor.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
 
-// Optional: If you want Budget and Reward to use associations with Category, you can add:
-// Budget.belongsTo(Category, { as: 'category', foreignKey: 'category_id' });
-// Reward.belongsTo(Category, { as: 'category', foreignKey: 'category_id' });
+// Category to SustainabilityQuestion
+Category.hasMany(SustainabilityQuestion, { as: 'questions', foreignKey: 'category_id' });
+SustainabilityQuestion.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
+
+// Expense to ExpenseAnswer
+Expense.hasMany(ExpenseAnswer, { as: 'answers', foreignKey: 'expense_id' });
+ExpenseAnswer.belongsTo(Expense, { foreignKey: 'expense_id', as: 'expense' });
+
+// SustainabilityQuestion to ExpenseAnswer
+SustainabilityQuestion.hasMany(ExpenseAnswer, { as: 'answers', foreignKey: 'question_id' });
+ExpenseAnswer.belongsTo(SustainabilityQuestion, { foreignKey: 'question_id', as: 'question' });
 
 module.exports = { 
   sequelize, 
@@ -37,5 +53,7 @@ module.exports = {
   Budget, 
   Reward, 
   SustainabilityFactor, 
-  SustainabilityMetric 
+  SustainabilityMetric,
+  SustainabilityQuestion,
+  ExpenseAnswer
 };

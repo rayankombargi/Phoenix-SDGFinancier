@@ -1,105 +1,192 @@
 const express = require('express');
 const router = express.Router();
-const { Expense, Category, SustainabilityFactor, SustainabilityMetric } = require('../models');
+
+const { 
+  Expense, 
+  Category, 
+  SustainabilityFactor, 
+  SustainabilityMetric, 
+  ExpenseAnswer, 
+  SustainabilityQuestion 
+} = require('../models');
 const authMiddleware = require('../middleware/authMiddleware');
+
+// Helper function to adjust the base factor using normalized survey answers.
+function adjustFactorWithAnswers(baseFactor, answers) {
+  let adjustedFactor = baseFactor;
+  if (answers && answers.length > 0) {
+    answers.forEach(answerRecord => {
+      const questionText = answerRecord.question && answerRecord.question.question_text
+        ? answerRecord.question.question_text.toLowerCase()
+        : "";
+      const answer = answerRecord.answer.toLowerCase();
+      // Example adjustments based on question text and answer.
+      if (questionText.includes("organic") && answer === "yes") {
+        adjustedFactor *= 0.8;
+      }
+      if (questionText.includes("locally sourced") && answer === "yes") {
+        adjustedFactor *= 0.9;
+      }
+      if (questionText.includes("green debt") && answer === "yes") {
+        adjustedFactor *= 0.85;
+      }
+      if (questionText.includes("green investment") && answer === "yes") {
+        adjustedFactor *= 0.75;
+      }
+      if (questionText.includes("sustainable brand") && answer === "yes") {
+        adjustedFactor *= 0.80;
+      }
+      if (questionText.includes("natural products") && answer === "yes") {
+        adjustedFactor *= 0.9;
+      }
+      if (questionText.includes("mode of travel") && answer === "public") {
+        adjustedFactor *= 0.7;
+      }
+      if (questionText.includes("mode of travel") && answer === "carpool") {
+        adjustedFactor *= 0.8;
+      }
+      if (questionText.includes("mode of travel") && answer === "electric") {
+        adjustedFactor *= 0.75;
+      }
+      if (questionText.includes("online course") && answer === "yes") {
+        adjustedFactor *= 0.85;
+      }
+      if (questionText.includes("green charity") && answer === "yes") {
+        adjustedFactor *= 0.90;
+      }
+    });
+  }
+  return adjustedFactor;
+}
 
 // GET /sustainability - Retrieve sustainability metrics for the authenticated user
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    let metric = await SustainabilityMetric.findOne({
-      where: { user_id: req.user.id }
-    });
+    let metric = await SustainabilityMetric.findOne({ where: { userId: req.user.id } });
     if (!metric) {
-      metric = await SustainabilityMetric.create({ user_id: req.user.id });
+      metric = await SustainabilityMetric.create({ userId: req.user.id });
     }
     res.json(metric);
   } catch (err) {
+    console.error('GET /sustainability error:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// PUT /sustainability - Update sustainability metrics for the authenticated user manually
+// PUT /sustainability - Update sustainability metrics manually for the authenticated user
 router.put('/', authMiddleware, async (req, res) => {
   try {
-    const { sustainability_score, eco_points } = req.body;
-    let metric = await SustainabilityMetric.findOne({
-      where: { user_id: req.user.id }
-    });
+    const { sustainabilityScore, ecoPoints } = req.body;
+    let metric = await SustainabilityMetric.findOne({ where: { userId: req.user.id } });
     if (!metric) {
       metric = await SustainabilityMetric.create({
-        user_id: req.user.id,
-        sustainability_score: sustainability_score || 0,
-        eco_points: eco_points || 0,
-        last_updated: new Date()
+        userId: req.user.id,
+        sustainabilityScore: sustainabilityScore || 0,
+        ecoPoints: ecoPoints || 0,
+        lastUpdated: new Date()
       });
     } else {
-      if (sustainability_score !== undefined) {
-        metric.sustainability_score = sustainability_score;
+      if (sustainabilityScore !== undefined) {
+        metric.sustainabilityScore = sustainabilityScore;
       }
-      if (eco_points !== undefined) {
-        metric.eco_points = eco_points;
+      if (ecoPoints !== undefined) {
+        metric.ecoPoints = ecoPoints;
       }
-      metric.last_updated = new Date();
+      metric.lastUpdated = new Date();
       await metric.save();
     }
     res.json(metric);
   } catch (err) {
+    console.error('PUT /sustainability error:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// POST /sustainability/compute - Compute sustainability metrics based on user's expenses and sustainability factors
+// POST /sustainability/compute - Compute sustainability metrics based on user's expenses and survey answers.
 router.post('/compute', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
-    // Retrieve all expenses for the user along with their categories and associated sustainability factors.
+    // Retrieve all expenses for the user, including associated category, sustainability factor, and normalized answers.
     const expenses = await Expense.findAll({
-      where: { user_id: userId },
-      include: [{
-        model: Category,
-        as: 'category',
-        include: [{
-          model: SustainabilityFactor,
-          as: 'sustainabilityFactor'
-        }]
-      }]
+      where: { userId },
+      include: [
+        {
+          model: Category,
+          as: 'category',
+          include: [{
+            model: SustainabilityFactor,
+            as: 'sustainabilityFactor'
+          }]
+        },
+        {
+          model: ExpenseAnswer,
+          as: 'answers',
+          include: [{
+            model: SustainabilityQuestion,
+            as: 'question'
+          }]
+        }
+      ]
     });
 
-    // Compute total CO₂ impact from expenses.
+    console.log(`Found ${expenses.length} expenses for user ${userId}`);
     let totalCO2Impact = 0;
+
     expenses.forEach(expense => {
       const cost = parseFloat(expense.cost);
-      const factor = expense.category && expense.category.sustainabilityFactor 
+      if (isNaN(cost)) {
+        console.warn(`Expense ${expense.id} has invalid cost: ${expense.cost}`);
+        return;
+      }
+      // Get the base CO₂ factor from the category's SustainabilityFactor.
+      let baseFactor = (expense.category && expense.category.sustainabilityFactor)
         ? parseFloat(expense.category.sustainabilityFactor.co2_factor)
         : 0;
-      totalCO2Impact += cost * factor;
+      if (isNaN(baseFactor)) baseFactor = 0;
+
+      console.log(`Expense ${expense.id}: category = ${expense.category ? expense.category.name : 'N/A'}, baseFactor = ${baseFactor}`);
+
+      // Adjust factor using normalized survey answers.
+      let adjustedFactor = adjustFactorWithAnswers(baseFactor, expense.answers);
+      
+      // Fallback: if no normalized answers exist and details are provided, use fallback logic.
+      if ((!expense.answers || expense.answers.length === 0) && expense.details) {
+        if (expense.category && expense.category.name === 'Food & Dining') {
+          if (expense.details.organic === true) adjustedFactor *= 0.8;
+          if (expense.details.local === true) adjustedFactor *= 0.9;
+        }
+        // Add fallback logic for other categories if needed.
+      }
+      
+      console.log(`Expense ${expense.id}: adjusted factor = ${adjustedFactor}, cost = ${cost}`);
+      const expenseScore = parseFloat((cost * adjustedFactor).toFixed(2));
+      console.log(`Expense ${expense.id}: computed sustainability score = ${expenseScore}`);
+      totalCO2Impact += expenseScore;
     });
 
-    // For example, a basic formula for a sustainability score:
-    // Higher spending with high CO₂ impact lowers the score.
-    // Here, we assume a base score of 100 and subtract a fraction of the total impact.
-    const score = Math.max(100 - (totalCO2Impact / 10), 0).toFixed(2);
-    // Eco points could be computed similarly; here, we subtract the impact from a base value.
-    const ecoPoints = Math.max(1000 - totalCO2Impact, 0);
+    console.log(`Total CO₂ impact: ${totalCO2Impact}`);
+    // Compute aggregated metrics for the user.
+    const score = parseFloat(Math.max(100 - (totalCO2Impact / 10), 0).toFixed(2));
+    const ecoPoints = Math.floor(Math.max(1000 - totalCO2Impact, 0));
 
-    // Update or create the user's sustainability metric record.
-    let metric = await SustainabilityMetric.findOne({ where: { user_id: userId } });
+    let metric = await SustainabilityMetric.findOne({ where: { userId } });
     if (!metric) {
       metric = await SustainabilityMetric.create({
-        user_id: userId,
-        sustainability_score: score,
-        eco_points: ecoPoints,
-        last_updated: new Date()
+        userId,
+        sustainabilityScore: score,
+        ecoPoints: ecoPoints,
+        lastUpdated: new Date()
       });
     } else {
-      metric.sustainability_score = score;
-      metric.eco_points = ecoPoints;
-      metric.last_updated = new Date();
+      metric.sustainabilityScore = score;
+      metric.ecoPoints = ecoPoints;
+      metric.lastUpdated = new Date();
       await metric.save();
     }
 
     res.json(metric);
   } catch (error) {
+    console.error('POST /sustainability/compute error:', error);
     res.status(500).json({ error: error.message });
   }
 });

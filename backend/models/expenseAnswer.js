@@ -1,36 +1,31 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Expense = sequelize.define('Expense', {
+  const ExpenseAnswer = sequelize.define('ExpenseAnswer', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    userId: {
+    expense_id: {
       type: DataTypes.UUID,
       allowNull: false,
+      comment: 'Reference to the expense that this answer belongs to',
     },
-    // Use category_id as the foreign key to link to the Category model
-    category_id: {
+    question_id: {
       type: DataTypes.UUID,
       allowNull: false,
+      comment: 'Reference to the sustainability question being answered',
     },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
-    name: {
+    answer: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    cost: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
+      comment: 'The answer provided by the user',
     },
   }, {
+    tableName: 'expense_answers',
     timestamps: true,
   });
 
-  return Expense;
+  return ExpenseAnswer;
 };

@@ -1,17 +1,20 @@
 require('dotenv').config();
 const express = require('express');
 const { sequelize } = require('./models');
-const authRoutes = require('./routes/auth');
-const profileRoutes = require('./routes/profile');
-const expenseRoutes = require('./routes/expenses');
-const budgetRoutes = require('./routes/budget');
-const rewardsRoutes = require('./routes/rewards');
-const sustainabilityRoutes = require('./routes/sustainability');
 
+// Initialize express app
 const app = express();
 
 // Use JSON parsing middleware before defining routes.
 app.use(express.json());
+
+// Import route files
+const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
+const expenseRoutes = require('./routes/expenseModel'); // Use your actual expense route file name
+const budgetRoutes = require('./routes/budget');
+const rewardsRoutes = require('./routes/rewards');
+const sustainabilityRoutes = require('./routes/sustainability');
 
 // Define routes.
 app.use('/auth', authRoutes);

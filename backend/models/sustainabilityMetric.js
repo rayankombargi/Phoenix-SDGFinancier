@@ -17,9 +17,9 @@ module.exports = (sequelize) => {
       defaultValue: 0.00,
     },
     ecoPoints: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0.00,
     },
     lastUpdated: {
       type: DataTypes.DATE,

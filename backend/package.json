@@ -7,6 +7,12 @@
     "start": "node app.js",
     "test": "NODE_ENV=test jest"
   },
+  "jest": {
+    "reporters": [
+      "default",
+      "./customreporter.js"
+    ]
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",

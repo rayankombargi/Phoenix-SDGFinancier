@@ -16,9 +16,10 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
     },
   }, {
-    freezeTableName: true,        // Prevent pluralization
-    tableName: 'categories',      // Explicit table name (lowercase)
+    freezeTableName: true,     // Prevent pluralizing table name
+    tableName: 'categories',   // Ensure table is named exactly "categories"
     timestamps: true,
   });
+
   return Category;
 };
