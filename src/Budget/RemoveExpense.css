@@ -10,10 +10,9 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+p {
+    margin-bottom: 20px;
+    color: #333;
 }
 
 .actions button {
