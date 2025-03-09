@@ -29,6 +29,12 @@
     gap: 1rem;
   }
 
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+    }
+  }
+
   .sort, .sortOrder, .category {
     display: flex;
     align-items: center;
