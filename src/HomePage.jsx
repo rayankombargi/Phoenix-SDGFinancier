@@ -7,7 +7,6 @@ import FeaturesSection from './components/FeaturesSection';
 import SummaryCards from './components/SummaryCards';
 import SDGPreview from './components/SDGPreview';
 import CallToAction from './components/CallToAction';
-import Footer from './components/Footer';
 
 function Homepage() {
   return (
@@ -63,7 +62,6 @@ function Homepage() {
         <CallToAction />
       </motion.div>
 
-      <Footer />
     </div>
   );
 }

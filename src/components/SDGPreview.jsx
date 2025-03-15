@@ -2,7 +2,7 @@
 import React from 'react';
 import Lottie from 'react-lottie';
 import sdgAnimation from '../animations/sdg.json';
-import Button from './Button';
+import Button from '../Dashboard/Button';
 
 function SDGPreview() {
   const defaultOptions = {
