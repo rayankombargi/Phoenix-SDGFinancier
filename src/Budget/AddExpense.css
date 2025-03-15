@@ -42,11 +42,12 @@
         font-size: 16px;
     }
 
+
     .actions {
       align-self: center;
     }
 
-    .save-btn, .cancel-btn{
+    .add-btn, .cancel-btn{
       padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 25px;
@@ -56,19 +57,19 @@
       width: 100px;
     }
     
-    .save-btn {
+    .add-btn {
       background-color: var(--secondary);
       color: #fff;
     }
     
-    .save-btn:hover {
+    .add-btn:hover {
       background-color: #019875;
     }
 
-    .save-btn:disabled {
-        background-color: #ccc;
-        color: #fff;
-        cursor: not-allowed;
+    .add-btn:disabled {
+      background-color: #ccc;
+      color: #fff;
+      cursor: not-allowed;
     }
     
     .cancel-btn {

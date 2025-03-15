@@ -37,6 +37,15 @@ function RecentTransactions() {
                 <td className="transaction-cell">{transaction.category}</td>
               </motion.tr>
             ))}
+            {
+              expenses.length === 0 && (
+                <tr className="transactions-row">
+                  <td colSpan="4" className="transaction-cell">
+                    <div className='no-transaction'> No recent transaction </div>
+                  </td>
+                </tr>
+              )
+            }
           </motion.tbody>
         </motion.table>
       </div>

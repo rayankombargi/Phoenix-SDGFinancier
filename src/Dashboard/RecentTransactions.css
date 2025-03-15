@@ -80,6 +80,12 @@
     color: var(--secondary);
   }
   
+  .no-transaction {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
   /* Responsive Adjustments */
   @media (max-width: 600px) {
     .transactions-table th,

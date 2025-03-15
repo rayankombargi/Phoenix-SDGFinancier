@@ -1,23 +1,56 @@
 import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ExpensesManager.css';
+import AddExpense from './AddExpense';
 import EditExpense from './EditExpense';
+import RemoveExpense from './RemoveExpense';
 import { ExpensesContext } from '../contexts/ExpensesContext';
 
 function ExpensesManager({ onExpensesChange }) {
   const { expenses, setExpenses } = useContext(ExpensesContext);
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [sortFilter, setSortFilter] = useState('Date');
+  const [sortOrder] = useState('Descending');
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchedExpense, setSearched] = useState('');
   const [expenseToEdit, setExpenseToEdit] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [expenseToRemove, setExpenseToRemove] = useState(null);
+  const [isRemoving, setIsRemoving] = useState(false);
   const itemsPerPage = 10;
 
+  const handleAddExpense = () => {
+    setIsAdding(true);
+  }
+
+  const handleAddSave = (AddedExpense) => {
+    const updatedExpenses = [...expenses, AddedExpense];
+    setExpenses(updatedExpenses);
+    setIsAdding(false);
+    if (onExpensesChange) onExpensesChange(updatedExpenses);
+  }
+
+  const handleAddCancel = () => {
+    setIsAdding(false);
+  }
+
   const handleRemoveExpense = (id) => {
+    const expense = expenses.find((exp) => exp.id === id);
+    setExpenseToRemove(expense);
+    setIsRemoving(true);
+  };
+
+  const handleRemoveSave = (id) => {
     const updated = expenses.filter((exp) => exp.id !== id);
     setExpenses(updated);
     if (onExpensesChange) onExpensesChange(updated);
-  };
+    setIsRemoving(false);
+  }
 
+  const handleRemoveCancel = () => {
+    setIsRemoving(false);
+  }
   const handleEditExpense = (id) => {
     const expense = expenses.find((exp) => exp.id === id);
     setExpenseToEdit(expense);
@@ -39,15 +72,44 @@ function ExpensesManager({ onExpensesChange }) {
     setExpenseToEdit(null);
   };
 
+  const handleSortChange = (e) => {
+    setSortFilter(e.target.value);
+    setCurrentPage(1);
+    const sortedExpenses = [...expenses];
+    switch (e.target.value) {
+      case 'Date':
+      sortedExpenses.sort((a, b) => new Date(a.date) - new Date(b.date));
+      break;
+      case 'Name':
+      sortedExpenses.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+      case 'Cost':
+      sortedExpenses.sort((a, b) => a.cost - b.cost);
+      break;
+      case 'Category':
+      sortedExpenses.sort((a, b) => a.category.localeCompare(b.category));
+      break;
+      default:
+      break;
+    }
+
+    if (sortOrder === 'Descending') {
+      sortedExpenses.reverse();
+    }
+    setExpenses(sortedExpenses);
+  }
+
   const handleCategoryChange = (e) => {
     setCategoryFilter(e.target.value);
     setCurrentPage(1);
   };
 
+  const searchedExpenses = searchedExpense === '' ? expenses : expenses.filter((exp) => exp.name.toLowerCase().includes(searchedExpense.toLowerCase()));
+
   const filteredExpenses =
     categoryFilter === 'All'
-      ? expenses
-      : expenses.filter((exp) => exp.category === categoryFilter);
+      ? searchedExpenses
+      : searchedExpenses.filter((exp) => exp.category === categoryFilter);
 
   const totalPages =
     filteredExpenses.length === 0 ? 0 : Math.ceil(filteredExpenses.length / itemsPerPage);
@@ -56,6 +118,10 @@ function ExpensesManager({ onExpensesChange }) {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const handleChange = (e) => {
+    setSearched(e.target.value);
+  }
 
   const handlePreviousPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -72,20 +138,42 @@ function ExpensesManager({ onExpensesChange }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className="filter">
-        <label htmlFor="category-filter">Filter by Category:</label>
-        <select id="category-filter" value={categoryFilter} onChange={handleCategoryChange}>
-          <option value="All">All</option>
-          <option value="Debts & Loans">Debts & Loans</option>
-          <option value="Savings & Investments">Savings & Investments</option>
-          <option value="Shopping & Lifestyle">Shopping & Lifestyle</option>
-          <option value="Food & Dining">Food & Dining</option>
-          <option value="Health & Wellness">Health & Wellness</option>
-          <option value="Travel & Leisure">Travel & Leisure</option>
-          <option value="Education & Self-Development">Education & Self-Development</option>
-          <option value="Giving & Charity">Giving & Charity</option>
-          <option value="Other">Other</option>
-        </select>
+      <div className='filters'>
+        <div className="sort">
+          <label htmlFor="sort-filter">Sort by:</label>
+          <select id="sort-filter" value={sortFilter} onChange={handleSortChange}>
+            <option value="Date">Date</option>
+            <option value="Name">Name</option>
+            <option value="Cost">Cost</option>
+            <option value="Category">Category</option>
+          </select>
+        </div>
+        <div className="sortOrder">
+          <label htmlFor="sortOrder-filter">Sort order:</label>
+          <select id="sortOrder-filter" value={sortFilter} onChange={handleSortChange}>
+            <option value="Descending">Descending</option>
+            <option value="Ascending">Ascending</option>
+          </select>
+        </div>
+        <div className="category">
+          <label htmlFor="category-filter">Filter by Category:</label>
+          <select id="category-filter" value={categoryFilter} onChange={handleCategoryChange}>
+            <option value="All">All</option>
+            <option value="Debts & Loans">Debts & Loans</option>
+            <option value="Savings & Investments">Savings & Investments</option>
+            <option value="Shopping & Lifestyle">Shopping & Lifestyle</option>
+            <option value="Food & Dining">Food & Dining</option>
+            <option value="Health & Wellness">Health & Wellness</option>
+            <option value="Travel & Leisure">Travel & Leisure</option>
+            <option value="Education & Self-Development">Education & Self-Development</option>
+            <option value="Giving & Charity">Giving & Charity</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div className='Search'>
+        <input className='searchedExpense' type="text" placeholder="Search expenses" value = {searchedExpense} onChange={handleChange} />
       </div>
 
       <div className="table-wrapper">
@@ -123,6 +211,16 @@ function ExpensesManager({ onExpensesChange }) {
             ))}
           </motion.tbody>
         </table>
+        {currentExpenses.length === 0 ? (
+          <div className="no-expenses">No expenses to display</div>
+        ) : null}
+      </div>
+
+      <div className='add-expense'>
+        <button className="add-btn" onClick={() => handleAddExpense()}>
+          New
+        </button>
+
       </div>
 
       <div className="pagination">
@@ -136,13 +234,26 @@ function ExpensesManager({ onExpensesChange }) {
           Next
         </button>
       </div>
-
+      
       <AnimatePresence>
         {isEditing && (
           <EditExpense
             initialData={expenseToEdit}
             onSave={handleEditSave}
             onCancel={handleEditCancel}
+          />
+        )}
+        { isAdding && (
+          <AddExpense
+            onAdd={handleAddSave}
+            onCancel={handleAddCancel}
+          />
+        )
+        } 
+        {isRemoving && (
+          <RemoveExpense
+            onRemove={() => handleRemoveSave(expenseToRemove.id)}
+            onCancel={() => handleRemoveCancel()}
           />
         )}
       </AnimatePresence>

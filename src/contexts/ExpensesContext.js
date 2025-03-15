@@ -11,8 +11,18 @@ export const ExpensesProvider = ({ children }) => {
     { id: 5, name: 'Textbooks', cost: 100, date: '2025-02-12', category: 'Education & Self-Development' },
   ]);
 
+  // New state for rewards points
+  const [rewardsPoints, setRewardsPoints] = useState(2450);
+
   return (
-    <ExpensesContext.Provider value={{ expenses, setExpenses }}>
+    <ExpensesContext.Provider
+      value={{
+        expenses,
+        setExpenses,
+        rewardsPoints,
+        setRewardsPoints,
+      }}
+    >
       {children}
     </ExpensesContext.Provider>
   );

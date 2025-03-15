@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {motion} from 'framer-motion';
-import './EditExpense.css';
+import './AddExpense.css';
 
-function EditExpense({initialData, onSave, onCancel}) {
+function AddExpense({onAdd, onCancel}) {
       const [formData, setFormData] = useState({
-        id: initialData.id,
-        date: initialData.date,
-        name: initialData.name,
-        cost: initialData.cost,
-        category: initialData.category,
+        id: '',
+        date: '',
+        name: '',
+        cost: '',
+        category: 'Other',
       });
     
       const handleChange = (e) => {
@@ -18,7 +18,7 @@ function EditExpense({initialData, onSave, onCancel}) {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData);
+        onAdd(formData);
       };
 
     return (
@@ -41,7 +41,7 @@ function EditExpense({initialData, onSave, onCancel}) {
                 Date:
                 <input 
                 name="date" 
-                type="text" 
+                type="date" 
                 value={formData.date} 
                 onChange={handleChange} 
                 />
@@ -83,9 +83,9 @@ function EditExpense({initialData, onSave, onCancel}) {
                 </select>
             </label>
             <div className="actions">
-                <button className='save-btn' type="submit" disabled = {
+                <button className='add-btn' type="submit" disabled={
                     !formData.date || !formData.name || !formData.cost || !formData.category || formData.cost < 0 || isNaN(formData.cost)
-                }>Save</button>
+                }>Add</button>
                 <button className='cancel-btn' type="button" onClick={onCancel}>Cancel</button>
             </div>
             </form>
@@ -94,4 +94,4 @@ function EditExpense({initialData, onSave, onCancel}) {
     );
 }
 
-export default EditExpense;
+export default AddExpense;
