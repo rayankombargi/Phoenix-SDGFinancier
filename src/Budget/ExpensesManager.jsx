@@ -1,13 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ExpensesManager.css';
 import AddExpense from './AddExpense';
 import EditExpense from './EditExpense';
 import RemoveExpense from './RemoveExpense';
+import { getExpenses, addExpense, updateExpense, deleteExpense } from '../services/api';
 import { ExpensesContext } from '../contexts/ExpensesContext';
 
 function ExpensesManager({ onExpensesChange }) {
-  const { expenses, setExpenses } = useContext(ExpensesContext);
+  const {expenses, setExpenses} = useContext(ExpensesContext);
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [sortFilter, setSortFilter] = useState('Date');
   const [sortOrder] = useState('Descending');
@@ -20,15 +21,41 @@ function ExpensesManager({ onExpensesChange }) {
   const [isRemoving, setIsRemoving] = useState(false);
   const itemsPerPage = 10;
 
+
+  // useEffect(() => {
+  //   const fetchExpenses = async () => {
+  //     try {
+  //       const response = await getExpenses();
+  //       setExpenses(response.data);
+  //     } catch (err) {
+  //       console.error('Error fetching expenses:', err);
+  //     }
+  //   };
+
+  //   fetchExpenses();
+  // }, []);
+
   const handleAddExpense = () => {
     setIsAdding(true);
   }
 
-  const handleAddSave = (AddedExpense) => {
+  const handleAddSave = /*async*/ (AddedExpense) => {
+    // try {
+    //   // const response = await addExpense(AddedExpense);
+    //   const updatedExpenses = [...expenses, response.data];
+    //   setExpenses(updatedExpenses);
+    //   setIsAdding(false);
+    //   if (onExpensesChange) onExpensesChange(updatedExpenses);
+    // }
+    // catch (err) {
+    //   console.error('Error adding expense:', err);
+    // }
+
     const updatedExpenses = [...expenses, AddedExpense];
     setExpenses(updatedExpenses);
     setIsAdding(false);
     if (onExpensesChange) onExpensesChange(updatedExpenses);
+
   }
 
   const handleAddCancel = () => {
@@ -41,7 +68,17 @@ function ExpensesManager({ onExpensesChange }) {
     setIsRemoving(true);
   };
 
-  const handleRemoveSave = (id) => {
+  const handleRemoveSave = /*async*/ (id) => {
+    // try {
+    //   await deleteExpense(id);
+    //   const updated = expenses.filter((exp) => exp.id !== id);
+    //   setExpenses(updated);
+    //   if (onExpensesChange) onExpensesChange(updated);
+    //   setIsRemoving(false);
+    // } catch (err) {
+    //   console.error('Error removing expense:', err);
+    // }
+
     const updated = expenses.filter((exp) => exp.id !== id);
     setExpenses(updated);
     if (onExpensesChange) onExpensesChange(updated);
@@ -57,9 +94,22 @@ function ExpensesManager({ onExpensesChange }) {
     setIsEditing(true);
   };
 
-  const handleEditSave = (updatedExpense) => {
+  const handleEditSave = async (updatedExpense) => {
+    // try {
+    //   const response = await updateExpense(updatedExpense.id, updatedExpense);
+    //   const updatedExpenses = expenses.map((exp) =>
+    //     exp.id === updatedExpense.id ? response.data : exp
+    //   );
+    //   setExpenses(updatedExpenses);
+    //   setIsEditing(false);
+    //   setExpenseToEdit(null);
+    //   if (onExpensesChange) onExpensesChange(updatedExpenses);
+    // } catch (err) {
+    //   console.error('Error updating expense:', err);
+    // }
+
     const updatedExpenses = expenses.map((exp) =>
-      exp.id === updatedExpense.id ? updatedExpense : exp
+      exp.id === updatedExpense.id ? updateExpense : exp
     );
     setExpenses(updatedExpenses);
     setIsEditing(false);
