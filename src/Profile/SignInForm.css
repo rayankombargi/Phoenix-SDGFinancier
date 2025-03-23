@@ -1,0 +1,66 @@
+/* Container Styling */
+.sign-in-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Form Styling */
+  .sign-in-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  button.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #00b894;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  
+  button.submit-btn:hover {
+    background-color: #019875;
+  }
+  
+  /* Error Text */
+  .error-text {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  
