@@ -1,71 +1,94 @@
-// HomePage.jsx
+// src/HomePage.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import NavBar from './components/NavBar';
 import HeroSection from './components/HeroSection';
-import FeaturesSection from './components/FeaturesSection';
-import SummaryCards from './components/SummaryCards';
+import EmpowermentSection from './components/EmpowermentSection'; // Renamed from "FeaturesSection"
+import ImpactOverview from './components/ImpactOverview';         // New inclusive section
 import SDGPreview from './components/SDGPreview';
 import CallToAction from './components/CallToAction';
-import Footer from './components/Footer';
+import './HomePage.css';
 
-function Homepage() {
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const fadeScaleVariant = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+const slideUpVariant = {
+  hidden: { y: 50, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+const slideInLeftVariant = {
+  hidden: { x: -100, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+const slideInBottomVariant = {
+  hidden: { y: 100, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+function HomePage() {
   return (
     <div className="homepage">
-      <NavBar />
-
-      {/* Hero Section with a faster scaling animation */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="homepage-container"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
       >
-        <HeroSection />
-      </motion.div>
+        {/* Hero Section */}
+        <motion.div variants={fadeScaleVariant}>
+          <HeroSection />
+        </motion.div>
 
-      {/* Features Section slides up quickly */}
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        <FeaturesSection />
-      </motion.div>
+        {/* Empowerment Section */}
+        <motion.div variants={slideUpVariant}>
+          <EmpowermentSection />
+        </motion.div>
 
-      {/* Summary Cards zoom in faster */}
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        whileInView={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        <SummaryCards />
-      </motion.div>
+        {/* Impact Overview */}
+        <motion.div variants={fadeScaleVariant}>
+          <ImpactOverview />
+        </motion.div>
 
-      {/* SDG Preview slides in quickly from the left */}
-      <motion.div
-        initial={{ x: -150, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        <SDGPreview />
-      </motion.div>
+        {/* SDG Preview */}
+        <motion.div variants={slideInLeftVariant}>
+          <SDGPreview />
+        </motion.div>
 
-      {/* Call To Action slides in quickly from below */}
-      <motion.div
-        initial={{ y: 150, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        <CallToAction />
+        {/* Call To Action */}
+        <motion.div variants={slideInBottomVariant}>
+          <CallToAction />
+        </motion.div>
       </motion.div>
-
-      <Footer />
     </div>
   );
 }
 
-export default Homepage;
+export default HomePage;

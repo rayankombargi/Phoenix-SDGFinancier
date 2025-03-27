@@ -1,6 +1,6 @@
 // CallToAction.jsx
 import React from 'react';
-import Button from './Button';
+import Button from '../Dashboard/Button';
 
 function CallToAction() {
   return (

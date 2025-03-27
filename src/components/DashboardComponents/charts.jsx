@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   LineChart,
   Line,
@@ -11,21 +11,47 @@ import {
   Cell,
 } from "recharts";
 import "../../DashboardTheme.css";
-
-const spendingData = [
-  { month: "Jan", amount: 400 },
-  { month: "Feb", amount: 600 },
-  { month: "Mar", amount: 350 },
-  { month: "Apr", amount: 500 },
-];
-
-const categoryData = [
-  { name: "Food", value: 300, color: "#FF5722" },
-  { name: "Utilities", value: 200, color: "#66bb6a" },
-  { name: "Leisure", value: 150, color: "#6c5ce7" },
-];
+import { ExpensesContext } from '../../contexts/ExpensesContext';
 
 const Charts = () => {
+  const { expenses } = useContext(ExpensesContext);
+
+  // Aggregate spending by month (using short month names)
+  const spendingByMonth = expenses.reduce((acc, expense) => {
+    const dateObj = new Date(expense.date);
+    const month = dateObj.toLocaleString('default', { month: 'short' });
+    const cost = parseFloat(expense.cost) || 0;
+    if (acc[month]) {
+      acc[month] += cost;
+    } else {
+      acc[month] = cost;
+    }
+    return acc;
+  }, {});
+
+  const spendingData = Object.keys(spendingByMonth).map((month) => ({
+    month,
+    amount: spendingByMonth[month],
+  }));
+
+  // Aggregate spending by category for the pie chart
+  const categoryDataMap = expenses.reduce((acc, expense) => {
+    const category = expense.category;
+    const cost = parseFloat(expense.cost) || 0;
+    if (acc[category]) {
+      acc[category] += cost;
+    } else {
+      acc[category] = cost;
+    }
+    return acc;
+  }, {});
+
+  const categoryData = Object.keys(categoryDataMap).map((category) => ({
+    name: category,
+    value: categoryDataMap[category],
+    color: "#" + ((1 << 24) * Math.random() | 0).toString(16)
+  }));
+
   return (
     <div className="charts-container">
       {/* Spending Trends */}

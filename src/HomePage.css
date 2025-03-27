@@ -1,0 +1,332 @@
+/* ----------------------------------
+   HomePage.css
+   A comprehensive, modern style for
+   your homepage sections, focusing
+   on inclusivity & relevant info.
+------------------------------------- */
+
+/* Optional: Import a Google Font for nicer typography */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* ----------------------------------
+   Root Variables & Global Styles
+------------------------------------- */
+:root {
+  --primary: #2d3436;
+  --secondary: #00b894;
+  --light: #ffffff;
+  --background: #f4f4f4;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --transition: 0.3s ease;
+
+  /* Additional color suggestions */
+  --accent: #0984e3;
+  --dark: #1e272e;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background);
+  color: var(--primary);
+  scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ----------------------------------
+   Main homepage wrapper
+------------------------------------- */
+.homepage {
+  min-height: 100vh;
+}
+
+/* ----------------------------------
+   Container that holds all sections
+------------------------------------- */
+.homepage-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Each child section gets a white card style by default */
+.homepage-container > div {
+  background-color: var(--light);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition);
+}
+.homepage-container > div:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Headings within sections */
+.homepage-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Paragraphs within sections */
+.homepage-container p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ----------------------------------
+   Hero Section
+------------------------------------- */
+.hero-section {
+  background: linear-gradient(120deg, var(--secondary) 0%, var(--accent) 100%);
+  color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::before,
+.hero-section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+  pointer-events: none;
+}
+.hero-section::before {
+  width: 400px;
+  height: 400px;
+  background: #fff;
+  top: -100px;
+  left: -100px;
+}
+.hero-section::after {
+  width: 500px;
+  height: 500px;
+  background: #fff;
+  bottom: -200px;
+  right: -150px;
+}
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+.hero-section .hero-button {
+  background-color: #fff;
+  color: var(--secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.hero-section .hero-button:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ----------------------------------
+   Empowerment Section (Features)
+------------------------------------- */
+.empowerment-section h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.empowerment-section p {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.empowerment-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.empowerment-card {
+  background: var(--light);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  flex: 1 1 250px;
+  min-width: 250px;
+  transition: transform var(--transition);
+  text-align: left;
+}
+.empowerment-card:hover {
+  transform: translateY(-4px);
+}
+.empowerment-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+}
+
+/* ----------------------------------
+   Impact Overview (New Inclusive Section)
+------------------------------------- */
+.impact-overview h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.impact-overview p {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.impact-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.impact-card {
+  background-color: var(--light);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform var(--transition);
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+.impact-card:hover {
+  transform: translateY(-4px);
+}
+.impact-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary);
+}
+.impact-card p {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+.impact-card small {
+  font-size: 0.8rem;
+  color: var(--primary);
+  opacity: 0.7;
+}
+
+/* ----------------------------------
+   SDG Preview
+------------------------------------- */
+.sdg-preview {
+  text-align: center;
+  padding: 2rem;
+}
+.sdg-preview img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* ----------------------------------
+   Call To Action
+------------------------------------- */
+.call-to-action {
+  text-align: center;
+  background: var(--secondary);
+  color: #fff;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  box-shadow: var(--shadow);
+  transition: background var(--transition);
+}
+.call-to-action h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.call-to-action p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.call-to-action button {
+  background-color: #fff;
+  color: var(--secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.call-to-action button:hover {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ----------------------------------
+   Responsive Adjustments
+------------------------------------- */
+@media (max-width: 992px) {
+  .homepage-container {
+    gap: 2rem;
+    padding: 2rem 1rem;
+  }
+  .hero-section {
+    padding: 3rem 1.5rem;
+  }
+  .hero-section h1 {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-container {
+    gap: 2rem;
+    padding: 1rem;
+  }
+  .homepage-container > div {
+    padding: 1.5rem;
+  }
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+  .hero-section p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 1rem;
+  }
+  .hero-section h1 {
+    font-size: 1.6rem;
+  }
+  .call-to-action h2 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,11 +1,12 @@
+// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import AppRouter from './AppRouter';
-import './theme.css';
+import App from './App';
+import './index.css'; // optional global styles
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppRouter />
+    <App />
   </React.StrictMode>
 );
