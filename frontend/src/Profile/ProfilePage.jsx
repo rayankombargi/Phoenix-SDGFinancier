@@ -1,137 +1,103 @@
-// src/Profile/ProfilePage.jsx
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import EditProfileModal from './EditProfileModal';
+import React from 'react';
 import './ProfilePage.css';
-import { useNavigate } from 'react-router-dom';
-import { getProfile, updateProfile } from '../services/api';
 
 function ProfilePage() {
-  const [user, setUser] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const isLoggedIn = Boolean(localStorage.getItem('token'));
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const res = await getProfile();
-        setUser(res.data);
-      } catch (err) {
-        console.error('Error fetching profile:', err);
-        setError('Unable to load profile. Please sign in.');
-      }
-    }
-    fetchProfile();
-  }, []);
-
-  const handleSignOut = () => {
-    localStorage.removeItem('token');
-    setUser(null);
-    navigate('/login');
-  };
-
-  const handleEditSave = async (updatedData) => {
-    try {
-      const res = await updateProfile(updatedData);
-      setUser(res.data);
-      setIsEditing(false);
-    } catch (err) {
-      console.error('Error updating profile:', err);
-      setError('Profile update failed.');
-    }
-  };
+  // If the user is not logged in, you might show a placeholder:
+  if (!isLoggedIn) {
+    return (
+      <div className="profile-page">
+        <div className="profile-placeholder">
+          <h2>Please Sign In</h2>
+          <p>You need to sign in to view your profile.</p>
+          <button className="btn signin-btn" onClick={() => window.location = '/login'}>
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="profile-page">
-      {/* Banner Header */}
-      <header className="profile-banner">
-        <div className="banner-overlay">
-          <h1>My Profile</h1>
+      <div className="profile-banner">
+        <div className="banner-overlay"></div>
+        <h1>Profile</h1>
+      </div>
+
+      {/* Use a specific container class for the profile page */}
+      <div className="profile-container">
+        <div className="profile-card">
+          <div className="avatar-section">
+            <img
+              src="https://via.placeholder.com/140"
+              alt="Profile"
+              className="profile-avatar"
+            />
+          </div>
+          <div className="profile-info">
+            <h2 className="profile-name">John Doe</h2>
+            <p className="profile-email">johndoe@example.com</p>
+            <p className="profile-location">New York, USA</p>
+            <p className="profile-bio">Passionate about sustainability and finance.</p>
+          </div>
+          <div className="profile-actions">
+            <button className="btn edit-btn">Edit Profile</button>
+          </div>
         </div>
-      </header>
 
-      <main className="profile-content container">
-        {error && <div className="error-message">{error}</div>}
+        <div className="profile-stats">
+          <h2>Stats</h2>
+          <div className="stats-grid">
+            <div className="stat-card">
+              <h3>Savings</h3>
+              <p>$1,250</p>
+            </div>
+            <div className="stat-card">
+              <h3>Donations</h3>
+              <p>$350</p>
+            </div>
+          </div>
+        </div>
 
-        {user ? (
-          <>
-            {/* Profile Card */}
-            <section className="profile-card">
-              <div className="avatar-section">
-                <img
-                  src={user.image || 'https://via.placeholder.com/150'}
-                  alt={`${user.username || 'User'}'s avatar`}
-                  className="profile-avatar"
-                />
-              </div>
-              <div className="profile-info">
-                <h2 className="profile-name">{user.username || 'Guest'}</h2>
-                <p className="profile-email">{user.email}</p>
-                <p className="profile-location">
-                  {user.location || 'No location'}
-                </p>
-                <p className="profile-bio">
-                  {user.bio || 'This user has not written a bio yet.'}
-                </p>
-              </div>
-              <div className="profile-actions">
-                <button className="btn edit-btn" onClick={() => setIsEditing(true)}>
-                  Edit Profile
-                </button>
-                <button className="btn signout-btn" onClick={handleSignOut}>
-                  Log Out
-                </button>
-              </div>
-            </section>
+        <div className="profile-achievements">
+          <h2>Achievements</h2>
+          <div className="badges-grid">
+            <div className="badge-card">
+              <img
+                src="https://via.placeholder.com/60"
+                alt="Badge"
+                className="badge-icon"
+              />
+              <p className="badge-title">Eco Hero</p>
+            </div>
+            <div className="badge-card">
+              <img
+                src="https://via.placeholder.com/60"
+                alt="Badge"
+                className="badge-icon"
+              />
+              <p className="badge-title">Saver</p>
+            </div>
+          </div>
+        </div>
 
-            {/* Example Stats Section */}
-            <section className="profile-stats">
-              <h2>Your Activity</h2>
-              <div className="stats-grid">
-                <div className="stat-card">
-                  <h3>Expenses</h3>
-                  <p>{user.expenseCount || 0}</p>
-                </div>
-                <div className="stat-card">
-                  <h3>Budget Saved</h3>
-                  <p>${user.budgetSaved || '0.00'}</p>
-                </div>
-                <div className="stat-card">
-                  <h3>Eco Points</h3>
-                  <p>{user.ecoPoints || 0}</p>
-                </div>
-              </div>
-            </section>
-          </>
-        ) : (
-          /* Logged Out State */
-          <section className="profile-placeholder">
-  <h2>Welcome to Your Profile</h2>
-  <p>
-    Create an account or sign in to track your expenses, earn eco-points,
-    and achieve your sustainability goals.
-  </p>
-  <button className="btn signin-btn" onClick={() => navigate('/login')}>
-    Sign In
-  </button>
-  <button className="btn signup-btn" onClick={() => navigate('/signup')}>
-    Sign Up
-  </button>
-</section>
-
-        )}
-      </main>
-
-      <AnimatePresence>
-        {isEditing && user && (
-          <EditProfileModal
-            initialData={user}
-            onSave={handleEditSave}
-            onCancel={() => setIsEditing(false)}
-          />
-        )}
-      </AnimatePresence>
+        <div className="profile-goals">
+          <h2>Goals & Milestones</h2>
+          <div className="goals-list">
+            <div className="goal-item">
+              <h4>Save $5,000 by end of year</h4>
+              <p>Progress: $2,500</p>
+            </div>
+            <div className="goal-item">
+              <h4>Donate $1,000 to charities</h4>
+              <p>Progress: $300</p>
+            </div>
+          </div>
+          <button className="btn add-goal-btn">Add Goal</button>
+        </div>
+      </div>
     </div>
   );
 }

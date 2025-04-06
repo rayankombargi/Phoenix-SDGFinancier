@@ -61,22 +61,65 @@ body {
   font-weight: 700;
 }
 
-/* Container for main content */
-.container {
+/* Specific Container for Profile Page */
+.profile-container {
   width: 90%;
   max-width: 1000px;
-  margin: -80px auto 2rem auto; /* Overlap card on banner */
+  /* Remove or reduce the negative margin */
+  margin: 0 auto 2rem auto; 
+  /* e.g., margin: -40px auto 2rem auto; for a slight overlap */
   padding: 1rem;
 }
 
-/* Error message */
-.error-message {
-  background-color: #ffe6e6;
-  color: #e74c3c;
-  padding: 1rem;
-  border-radius: 8px;
+/* Placeholder for logged-out users */
+.profile-placeholder {
+  background-color: var(--light);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 2rem;
   text-align: center;
+  margin-top: 2rem;
+  transition: transform var(--transition);
+}
+.profile-placeholder:hover {
+  transform: translateY(-4px);
+}
+.profile-placeholder h2 {
+  font-size: 1.8rem;
   margin-bottom: 1rem;
+  font-weight: 600;
+}
+.profile-placeholder p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+.placeholder-illustration {
+  max-width: 100%;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.signin-btn {
+  background-color: var(--secondary);
+  color: var(--light);
+  margin-top: 1rem;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  transition: background var(--transition);
+}
+.signin-btn:hover {
+  background-color: var(--accent);
+}
+.signup-btn {
+  background-color: var(--accent);
+  color: var(--light);
+  margin-top: 1rem;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  transition: background var(--transition);
+}
+.signup-btn:hover {
+  background-color: var(--secondary);
 }
 
 /* Profile Card */
@@ -148,13 +191,6 @@ body {
 .edit-btn:hover {
   background-color: var(--accent);
 }
-.signout-btn {
-  background-color: #e74c3c;
-  color: var(--light);
-}
-.signout-btn:hover {
-  background-color: #c0392b;
-}
 
 /* Stats Section */
 .profile-stats {
@@ -177,8 +213,8 @@ body {
 .stats-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 1.5rem;
+  justify-content: center;
 }
 .stat-card {
   background-color: var(--background);
@@ -200,7 +236,7 @@ body {
 .stat-card p {
   font-size: 1.4rem;
   font-weight: 700;
-  margin: 0;
+  margin-bottom: 0;
   color: var(--primary);
 }
 
@@ -309,48 +345,6 @@ body {
   background-color: var(--accent);
 }
 
-/* Placeholder for logged-out users */
-.profile-placeholder {
-  background-color: var(--light);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 2rem;
-  text-align: center;
-}
-.signin-btn {
-  background-color: var(--secondary);
-  color: var(--light);
-  margin-top: 1rem;
-  border-radius: 25px;
-  padding: 0.75rem 1.5rem;
-  transition: background var(--transition);
-}
-.signin-btn:hover {
-  background-color: var(--accent);
-}
-
-/* Modal Styles (shared with EditProfileModal) */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-.modal-content {
-  background-color: var(--light);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  max-width: 500px;
-  width: 90%;
-}
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .profile-banner {
@@ -362,7 +356,7 @@ body {
   .profile-banner h1 {
     font-size: 1.8rem;
   }
-  .container {
+  .profile-container {
     margin: -60px auto 1rem auto;
   }
   .profile-avatar {
@@ -386,7 +380,7 @@ body {
   .profile-banner h1 {
     font-size: 1.4rem;
   }
-  .container {
+  .profile-container {
     margin: -50px auto 1rem auto;
   }
   .profile-card {
@@ -399,56 +393,4 @@ body {
   .profile-name {
     font-size: 1.2rem;
   }
-  /* In ProfilePage.css (add these styles or update existing ones) */
-
-/* Placeholder for logged-out users */
-.profile-placeholder {
-  background-color: var(--light);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 2rem;
-  text-align: center;
-  margin-top: 2rem;
-  transition: transform var(--transition);
-}
-.profile-placeholder:hover {
-  transform: translateY(-4px);
-}
-.profile-placeholder h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.profile-placeholder p {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-.placeholder-illustration {
-  max-width: 100%;
-  margin-bottom: 1.5rem;
-  border-radius: 8px;
-  object-fit: cover;
-}
-.signin-btn {
-  background-color: var(--secondary);
-  color: var(--light);
-  margin: 0.5rem;
-  border-radius: 25px;
-  padding: 0.75rem 1.5rem;
-  transition: background var(--transition);
-}
-.signin-btn:hover {
-  background-color: var(--accent);
-}
-.signup-btn {
-  background-color: var(--accent);
-  color: var(--light);
-  margin: 0.5rem;
-  border-radius: 25px;
-  padding: 0.75rem 1.5rem;
-  transition: background var(--transition);
-}
-.signup-btn:hover {
-  background-color: var(--secondary);
-}
 }
