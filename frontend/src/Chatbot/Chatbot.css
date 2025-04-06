@@ -150,6 +150,42 @@
   align-items: center;
 }
 
+.selected-file-container {
+  position: absolute;
+  bottom: 260px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: inline-block;
+}
+
+.selected-file-container p {
+  background: var(--light);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.selected-file-container button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--danger);
+  color: var(--light);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
 .chat-input {
   flex: 1;
   padding: 1rem;

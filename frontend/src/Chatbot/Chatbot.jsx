@@ -10,6 +10,7 @@ function ChatBot() {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null); // State for the selected image
+  const [selectedFile, setSelectedFile] = useState(null); // State for the selected file
   const chatHistoryRef = useRef(null);
 
   useEffect(() => {
@@ -19,11 +20,14 @@ function ChatBot() {
   }, [chatHistory]);
 
   const handleSendMessage = async () => {
-    if (!userMessage.trim() && !selectedImage) return;
+    if (!userMessage.trim() && !selectedImage && !selectedFile) return;
 
     const newHistory = [...chatHistory];
     if (selectedImage) {
       newHistory.push({ sender: 'user', image: selectedImage, timestamp: new Date().toLocaleTimeString() });
+    }
+    if (selectedFile) {
+      newHistory.push({ sender: 'user', file: selectedFile, timestamp: new Date().toLocaleTimeString() });
     }
     if (userMessage.trim()) {
       newHistory.push({ sender: 'user', text: userMessage, timestamp: new Date().toLocaleTimeString() });
@@ -32,6 +36,7 @@ function ChatBot() {
     setChatHistory(newHistory);
     setUserMessage('');
     setSelectedImage(null); // Clear the selected image
+    setSelectedFile(null); // Clear the selected file
     setIsTyping(true);
 
     try {
@@ -40,6 +45,11 @@ function ChatBot() {
         const response = await fetch(selectedImage);
         const blob = await response.blob();
         formData.append('image', blob);
+      }
+      if (selectedFile) {
+        const response = await fetch(selectedFile);
+        const blob = await response.blob();
+        formData.append('file', blob);
       }
       formData.append('message', userMessage);
 
@@ -70,8 +80,26 @@ function ChatBot() {
     }
   };
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const fileURL = `${URL.createObjectURL(file)}#${new Date().getTime()}`; // Ensure unique URL
+      setSelectedFile(fileURL); // Set the selected file
+    } catch (error) {
+      console.error('Error handling file upload:', error);
+    } finally {
+      e.target.value = ''; // Reset the file input value to allow re-uploading the same file
+    }
+  };
+
   const handleRemoveImage = () => {
     setSelectedImage(null); // Clear the selected image
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null); // Clear the selected file
   };
 
   const handleResetChat = () => {
@@ -104,6 +132,20 @@ function ChatBot() {
                       boxShadow: 'var(--shadow)'
                     }}
                   />
+                )}
+                {msg.file && (
+                  <p
+                    style={{
+                      background: 'var(--light)',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '12px',
+                      boxShadow: 'var(--shadow)',
+                      marginTop: '0.5rem',
+                      color: 'var(--primary)' // Change font color for the file URL
+                    }}
+                  >
+                    {msg.file.split('/').pop()}
+                  </p>
                 )}
                 <span className={`timestamp ${msg.sender}`}>{msg.timestamp}</span>
               </div>
@@ -153,8 +195,61 @@ function ChatBot() {
               </button>
             </div>
           )}
+          {selectedFile && (
+            <div className="selected-file-container" style={{ 
+              position: 'absolute', 
+              bottom: '220px', 
+              left: '50%',
+              transform: 'translateX(-50%)', 
+              zIndex: 10, 
+              display: 'inline-block' 
+            }}>
+              <p
+                style={{
+                  background: 'var(--light)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '12px',
+                  boxShadow: 'var(--shadow)',
+                  marginBottom: '1rem',
+                  color: 'var(--primary)' // Change font color for the selected file URL
+                }}
+              >
+                {selectedFile.split('/').pop()}
+              </p>
+              <button
+                onClick={handleRemoveFile}
+                style={{
+                  position: 'absolute',
+                  top: '5px',
+                  right: '5px',
+                  background: 'var(--danger)',
+                  color: 'var(--light)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '24px',
+                  height: '24px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  lineHeight: '1'
+                }}
+              >
+                &times;
+              </button>
+            </div>
+          )}
           <div className="chat-input-container">
-            <label className="upload-button" style={{ cursor: 'pointer', padding: '0.75rem 1rem' }}>
+            <label className="upload-button" style={{ cursor: 'pointer', padding: '0.5rem 0.75rem', fontSize: '1.5rem', marginTop: '0.5rem' }}>
+              📄
+              <input
+                type="file"
+                onChange={handleFileUpload}
+                style={{ display: 'none'}}
+              />
+            </label>
+            <label className="upload-button" style={{ cursor: 'pointer', padding: '0.5rem 0.75rem', fontSize: '1.5rem', marginTop: '0.5rem' }}>
               📷
               <input
                 type="file"
