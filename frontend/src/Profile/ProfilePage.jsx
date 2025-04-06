@@ -4,7 +4,7 @@ import './ProfilePage.css';
 function ProfilePage() {
   const isLoggedIn = Boolean(localStorage.getItem('token'));
 
-  // If the user is not logged in, you might show a placeholder:
+  // If the user is not logged in, show a placeholder:
   if (!isLoggedIn) {
     return (
       <div className="profile-page">

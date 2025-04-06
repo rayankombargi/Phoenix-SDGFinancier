@@ -29,7 +29,7 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Main Profile Page Wrapper */
+/* All styles are now scoped within .profile-page */
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@ body {
 }
 
 /* Banner Header */
-.profile-banner {
+.profile-page .profile-banner {
   position: relative;
   height: 240px;
   background: linear-gradient(135deg, var(--secondary), var(--accent));
@@ -45,7 +45,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-.banner-overlay {
+.profile-page .banner-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -53,7 +53,7 @@ body {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
 }
-.profile-banner h1 {
+.profile-page .profile-banner h1 {
   position: relative;
   z-index: 1;
   color: var(--light);
@@ -61,18 +61,16 @@ body {
   font-weight: 700;
 }
 
-/* Specific Container for Profile Page */
-.profile-container {
+/* Specific Container for Profile Page Content */
+.profile-page .profile-container {
   width: 90%;
   max-width: 1000px;
-  /* Remove or reduce the negative margin */
-  margin: 0 auto 2rem auto; 
-  /* e.g., margin: -40px auto 2rem auto; for a slight overlap */
+  margin: 0 auto 2rem auto;  /* Centers content only in the profile page */
   padding: 1rem;
 }
 
 /* Placeholder for logged-out users */
-.profile-placeholder {
+.profile-page .profile-placeholder {
   background-color: var(--light);
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -81,25 +79,25 @@ body {
   margin-top: 2rem;
   transition: transform var(--transition);
 }
-.profile-placeholder:hover {
+.profile-page .profile-placeholder:hover {
   transform: translateY(-4px);
 }
-.profile-placeholder h2 {
+.profile-page .profile-placeholder h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
-.profile-placeholder p {
+.profile-page .profile-placeholder p {
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
-.placeholder-illustration {
+.profile-page .placeholder-illustration {
   max-width: 100%;
   margin-bottom: 1.5rem;
   border-radius: 8px;
   object-fit: cover;
 }
-.signin-btn {
+.profile-page .signin-btn {
   background-color: var(--secondary);
   color: var(--light);
   margin-top: 1rem;
@@ -107,10 +105,10 @@ body {
   padding: 0.75rem 1.5rem;
   transition: background var(--transition);
 }
-.signin-btn:hover {
+.profile-page .signin-btn:hover {
   background-color: var(--accent);
 }
-.signup-btn {
+.profile-page .signup-btn {
   background-color: var(--accent);
   color: var(--light);
   margin-top: 1rem;
@@ -118,12 +116,12 @@ body {
   padding: 0.75rem 1.5rem;
   transition: background var(--transition);
 }
-.signup-btn:hover {
+.profile-page .signup-btn:hover {
   background-color: var(--secondary);
 }
 
 /* Profile Card */
-.profile-card {
+.profile-page .profile-card {
   background-color: var(--light);
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -132,20 +130,19 @@ body {
   flex-direction: column;
   align-items: center;
   transition: transform var(--transition);
-  position: relative;
   margin-bottom: 2rem;
 }
-.profile-card:hover {
+.profile-page .profile-card:hover {
   transform: translateY(-4px);
 }
 
 /* Avatar */
-.avatar-section {
+.profile-page .avatar-section {
   width: 140px;
   height: 140px;
   margin-bottom: 1rem;
 }
-.profile-avatar {
+.profile-page .profile-avatar {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -154,28 +151,28 @@ body {
 }
 
 /* Profile Info */
-.profile-info {
+.profile-page .profile-info {
   text-align: center;
   margin-bottom: 1.5rem;
 }
-.profile-name {
+.profile-page .profile-name {
   font-size: 1.8rem;
   margin: 0.5rem 0;
   font-weight: 600;
 }
-.profile-email,
-.profile-location,
-.profile-bio {
+.profile-page .profile-email,
+.profile-page .profile-location,
+.profile-page .profile-bio {
   font-size: 1rem;
   margin: 0.25rem 0;
 }
 
 /* Actions */
-.profile-actions {
+.profile-page .profile-actions {
   display: flex;
   gap: 1rem;
 }
-.btn {
+.profile-page .btn {
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 25px;
@@ -184,16 +181,16 @@ body {
   cursor: pointer;
   transition: background-color var(--transition);
 }
-.edit-btn {
+.profile-page .edit-btn {
   background-color: var(--secondary);
   color: var(--light);
 }
-.edit-btn:hover {
+.profile-page .edit-btn:hover {
   background-color: var(--accent);
 }
 
 /* Stats Section */
-.profile-stats {
+.profile-page .profile-stats {
   background-color: var(--light);
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -202,21 +199,21 @@ body {
   text-align: center;
   transition: transform var(--transition);
 }
-.profile-stats:hover {
+.profile-page .profile-stats:hover {
   transform: translateY(-4px);
 }
-.profile-stats h2 {
+.profile-page .profile-stats h2 {
   font-size: 1.6rem;
   margin-bottom: 1.5rem;
   font-weight: 600;
 }
-.stats-grid {
+.profile-page .stats-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
 }
-.stat-card {
+.profile-page .stat-card {
   background-color: var(--background);
   border-radius: 12px;
   box-shadow: var(--shadow);
@@ -224,16 +221,16 @@ body {
   width: 140px;
   transition: transform var(--transition);
 }
-.stat-card:hover {
+.profile-page .stat-card:hover {
   transform: translateY(-4px);
 }
-.stat-card h3 {
+.profile-page .stat-card h3 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
   color: var(--secondary);
   font-weight: 600;
 }
-.stat-card p {
+.profile-page .stat-card p {
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 0;
@@ -241,31 +238,31 @@ body {
 }
 
 /* Achievements / Badges Section */
-.profile-achievements {
+.profile-page .profile-achievements {
   background-color: var(--light);
   border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 2rem;
   margin-bottom: 2rem;
-  transition: transform var(--transition);
   text-align: center;
+  transition: transform var(--transition);
 }
-.profile-achievements:hover {
+.profile-page .profile-achievements:hover {
   transform: translateY(-4px);
 }
-.profile-achievements h2 {
+.profile-page .profile-achievements h2 {
   font-size: 1.6rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
-.badges-grid {
+.profile-page .badges-grid {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 1rem;
 }
-.badge-card {
+.profile-page .badge-card {
   background-color: var(--background);
   border-radius: 12px;
   box-shadow: var(--shadow);
@@ -274,40 +271,40 @@ body {
   text-align: center;
   transition: transform var(--transition);
 }
-.badge-card:hover {
+.profile-page .badge-card:hover {
   transform: translateY(-4px);
 }
-.badge-icon {
+.profile-page .badge-icon {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 0.5rem;
 }
-.badge-title {
+.profile-page .badge-title {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--secondary);
 }
 
 /* Goals / Milestones Section */
-.profile-goals {
+.profile-page .profile-goals {
   background-color: var(--light);
   border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 2rem;
-  transition: transform var(--transition);
   text-align: center;
+  transition: transform var(--transition);
 }
-.profile-goals:hover {
+.profile-page .profile-goals:hover {
   transform: translateY(-4px);
 }
-.profile-goals h2 {
+.profile-page .profile-goals h2 {
   font-size: 1.6rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
-.goals-list {
+.profile-page .goals-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -315,82 +312,83 @@ body {
   max-width: 500px;
   text-align: left;
 }
-.goal-item {
+.profile-page .goal-item {
   background-color: var(--background);
   border-radius: 8px;
   padding: 1rem;
   box-shadow: var(--shadow);
   transition: transform var(--transition);
 }
-.goal-item:hover {
+.profile-page .goal-item:hover {
   transform: translateY(-4px);
 }
-.goal-item h4 {
+.profile-page .goal-item h4 {
   margin: 0 0 0.25rem;
   font-size: 1.1rem;
   color: var(--secondary);
   font-weight: 600;
 }
-.goal-item p {
+.profile-page .goal-item p {
   margin: 0;
   font-size: 0.9rem;
   color: var(--primary);
   opacity: 0.8;
 }
-.add-goal-btn {
+.profile-page .add-goal-btn {
   background-color: var(--secondary);
   color: var(--light);
 }
-.add-goal-btn:hover {
+.profile-page .add-goal-btn:hover {
   background-color: var(--accent);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-  .profile-banner {
+  .profile-page .profile-banner {
     height: 200px;
   }
-  .banner-overlay {
-    background-color: rgba(0,0,0,0.3);
+  .profile-page .banner-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
   }
-  .profile-banner h1 {
+  .profile-page .profile-banner h1 {
     font-size: 1.8rem;
   }
-  .profile-container {
+  .profile-page .profile-container {
     margin: -60px auto 1rem auto;
   }
-  .profile-avatar {
+  .profile-page .profile-avatar {
     width: 100px;
     height: 100px;
   }
-  .profile-name {
+  .profile-page .profile-name {
     font-size: 1.4rem;
   }
-  .stat-card {
+  .profile-page .stat-card {
     width: 120px;
   }
-  .badge-card {
+  .profile-page .badge-card {
     width: 100px;
   }
 }
+
 @media (max-width: 480px) {
-  .profile-banner {
+  .profile-page .profile-banner {
     height: 150px;
   }
-  .profile-banner h1 {
+  .profile-page .profile-banner h1 {
     font-size: 1.4rem;
   }
-  .profile-container {
+  .profile-page .profile-container {
     margin: -50px auto 1rem auto;
   }
-  .profile-card {
+  .profile-page .profile-card {
     padding: 1rem;
   }
-  .profile-avatar {
+  .profile-page .profile-avatar {
     width: 80px;
     height: 80px;
   }
-  .profile-name {
+  .profile-page .profile-name {
     font-size: 1.2rem;
   }
 }

@@ -57,7 +57,7 @@ function HomePage() {
     <div className="homepage">
       {/* The container class from Bootstrap provides responsive layout */}
       <motion.div
-        className="container homepage-container"
+        className="homepage-container"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
