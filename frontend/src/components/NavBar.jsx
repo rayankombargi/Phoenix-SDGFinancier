@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// src/components/NavBar.jsx
+>>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
@@ -124,4 +128,8 @@ function NavBar() {
   );
 }
 
+<<<<<<< HEAD
 export default NavBar;
+=======
+export default NavBar;
+>>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a

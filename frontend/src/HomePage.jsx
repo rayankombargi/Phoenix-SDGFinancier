@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// src/HomePage.jsx
+>>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 import React from 'react';
 import { motion } from 'framer-motion';
 import HeroSection from './components/HeroSection';
@@ -55,9 +59,14 @@ const slideInBottomVariant = {
 function HomePage() {
   return (
     <div className="homepage">
+<<<<<<< HEAD
       {/* The container class from Bootstrap provides responsive layout */}
       <motion.div
         className="container homepage-container"
+=======
+      <motion.div
+        className="homepage-container"
+>>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -91,4 +100,8 @@ function HomePage() {
   );
 }
 
+<<<<<<< HEAD
 export default HomePage;
+=======
+export default HomePage;
+>>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a

@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 import 'bootstrap/dist/css/bootstrap.min.css';
 // If you need Bootstrap's JavaScript-based components (like modals, tooltips):
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import './index.css'; // or wherever your main custom CSS is
 // ...the rest of your imports
+=======
+// src/index.js
+>>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
