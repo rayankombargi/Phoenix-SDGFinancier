@@ -1,5 +1,4 @@
 /* ----------------------------------
-<<<<<<< HEAD
    Modern & Advanced HomePage.css
 ------------------------------------- */
 
@@ -15,31 +14,6 @@
   --border-radius: 16px;
   --glass-bg: rgba(255, 255, 255, 0.6);
   --blur-amount: 10px;
-=======
-   HomePage.css
-   A comprehensive, modern style for
-   your homepage sections, focusing
-   on inclusivity & relevant info.
-------------------------------------- */
-
-/* Optional: Import a Google Font for nicer typography */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
-
-/* ----------------------------------
-   Root Variables & Global Styles
-------------------------------------- */
-:root {
-  --primary: #2d3436;
-  --secondary: #00b894;
-  --light: #ffffff;
-  --background: #f4f4f4;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --transition: 0.3s ease;
-
-  /* Additional color suggestions */
-  --accent: #0984e3;
-  --dark: #1e272e;
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 }
 
 html,
@@ -52,16 +26,7 @@ body {
   scroll-behavior: smooth;
 }
 
-<<<<<<< HEAD
 h1, h2, h3, h4, h5, h6 {
-=======
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
   margin: 0;
   font-weight: 700;
   color: var(--primary);
@@ -73,7 +38,6 @@ p {
   font-weight: 300;
 }
 
-<<<<<<< HEAD
 /* Main Homepage Wrapper */
 .homepage {
   min-height: 100vh;
@@ -81,20 +45,6 @@ p {
 }
 
 .homepage-container {
-=======
-/* ----------------------------------
-   Main homepage wrapper
-------------------------------------- */
-.homepage {
-  min-height: 100vh;
-}
-
-/* ----------------------------------
-   Container that holds all sections
-------------------------------------- */
-.homepage-container {
-  width: 100%;
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
   max-width: 1200px;
   margin: 0 auto;
   padding: 3rem 1rem;
@@ -103,7 +53,6 @@ p {
   gap: 3rem;
 }
 
-<<<<<<< HEAD
 
 /* Card-Style Sections with Glassmorphism */
 .homepage-container > section {
@@ -219,110 +168,12 @@ p {
   margin: 0 auto 2rem;
 }
 
-=======
-/* Each child section gets a white card style by default */
-.homepage-container > div {
-  background-color: var(--light);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  transition: box-shadow var(--transition);
-}
-.homepage-container > div:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-}
-
-/* Headings within sections */
-.homepage-container h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-/* Paragraphs within sections */
-.homepage-container p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-/* ----------------------------------
-   Hero Section
-------------------------------------- */
-.hero-section {
-  background: linear-gradient(120deg, var(--secondary) 0%, var(--accent) 100%);
-  color: #fff;
-  padding: 4rem 2rem;
-  text-align: center;
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-}
-.hero-section::before,
-.hero-section::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.2;
-  pointer-events: none;
-}
-.hero-section::before {
-  width: 400px;
-  height: 400px;
-  background: #fff;
-  top: -100px;
-  left: -100px;
-}
-.hero-section::after {
-  width: 500px;
-  height: 500px;
-  background: #fff;
-  bottom: -200px;
-  right: -150px;
-}
-.hero-section h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-.hero-section p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-.hero-section .hero-button {
-  background-color: #fff;
-  color: var(--secondary);
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background var(--transition);
-}
-.hero-section .hero-button:hover {
-  background-color: var(--accent);
-  color: #fff;
-}
-
-/* ----------------------------------
-   Empowerment Section (Features)
-------------------------------------- */
-.empowerment-section h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-.empowerment-section p {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-}
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .empowerment-features {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
 }
-<<<<<<< HEAD
 
 .empowerment-card {
   flex: 1 1 300px;
@@ -340,28 +191,10 @@ p {
 
 .empowerment-card h3 {
   font-size: 1.5rem;
-=======
-.empowerment-card {
-  background: var(--light);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  flex: 1 1 250px;
-  min-width: 250px;
-  transition: transform var(--transition);
-  text-align: left;
-}
-.empowerment-card:hover {
-  transform: translateY(-4px);
-}
-.empowerment-card h3 {
-  font-size: 1.3rem;
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
   margin-bottom: 0.5rem;
   color: var(--secondary);
 }
 
-<<<<<<< HEAD
 /* Impact Overview Section */
 .impact-overview {
   text-align: center;
@@ -377,27 +210,12 @@ p {
   margin: 0 auto 2rem;
 }
 
-=======
-/* ----------------------------------
-   Impact Overview (New Inclusive Section)
-------------------------------------- */
-.impact-overview h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-.impact-overview p {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 2rem;
-}
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .impact-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
 }
-<<<<<<< HEAD
 
 .impact-card {
   flex: 1 1 250px;
@@ -419,42 +237,17 @@ p {
   color: var(--secondary);
 }
 
-=======
-.impact-card {
-  background-color: var(--light);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  text-align: center;
-  transition: transform var(--transition);
-  flex: 1 1 200px;
-  min-width: 200px;
-}
-.impact-card:hover {
-  transform: translateY(-4px);
-}
-.impact-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--secondary);
-}
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .impact-card p {
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .impact-card small {
   font-size: 0.8rem;
   color: var(--primary);
   opacity: 0.7;
 }
 
-<<<<<<< HEAD
 /* SDG Preview Section */
 .sdg-preview {
   text-align: center;
@@ -484,45 +277,17 @@ p {
   flex: 1 1 300px;
 }
 
-=======
-/* ----------------------------------
-   SDG Preview
-------------------------------------- */
-.sdg-preview {
-  text-align: center;
-  padding: 2rem;
-}
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .sdg-preview img {
   max-width: 100%;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
 
-<<<<<<< HEAD
 /* Call To Action Section */
-=======
-/* ----------------------------------
-   Call To Action
-------------------------------------- */
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .call-to-action {
   text-align: center;
   background: var(--secondary);
   color: #fff;
-<<<<<<< HEAD
-  padding: 3rem 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  transition: background var(--transition);
-}
-
-.call-to-action h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-=======
   border-radius: 16px;
   padding: 3rem 2rem;
   box-shadow: var(--shadow);
@@ -533,30 +298,10 @@ p {
   margin-bottom: 1rem;
   color: #fff;
 }
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 .call-to-action p {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
-<<<<<<< HEAD
-
-.call-to-action button {
-  background: linear-gradient(45deg, var(--accent), var(--secondary));
-  border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 30px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #fff;
-  transition: background var(--transition), transform var(--transition);
-}
-
-.call-to-action button:hover {
-  transform: scale(1.05);
-}
-
-/* Responsive Adjustments */
-=======
 .call-to-action button {
   background-color: #fff;
   color: var(--secondary);
@@ -575,24 +320,16 @@ p {
 /* ----------------------------------
    Responsive Adjustments
 ------------------------------------- */
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
 @media (max-width: 992px) {
   .homepage-container {
     gap: 2rem;
     padding: 2rem 1rem;
   }
   .hero-section {
-<<<<<<< HEAD
     padding: 4rem 1.5rem;
   }
   .hero-section h1 {
     font-size: 2.5rem;
-=======
-    padding: 3rem 1.5rem;
-  }
-  .hero-section h1 {
-    font-size: 2.2rem;
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
   }
 }
 
@@ -601,19 +338,11 @@ p {
     gap: 2rem;
     padding: 1rem;
   }
-<<<<<<< HEAD
   .homepage-container > section {
     padding: 1.5rem;
   }
   .hero-section h1 {
     font-size: 2rem;
-=======
-  .homepage-container > div {
-    padding: 1.5rem;
-  }
-  .hero-section h1 {
-    font-size: 1.8rem;
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
   }
   .hero-section p {
     font-size: 1rem;
@@ -622,23 +351,12 @@ p {
 
 @media (max-width: 480px) {
   .hero-section {
-<<<<<<< HEAD
     padding: 3rem 1rem;
   }
   .hero-section h1 {
     font-size: 1.8rem;
-=======
-    padding: 2rem 1rem;
-  }
-  .hero-section h1 {
-    font-size: 1.6rem;
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
   }
   .call-to-action h2 {
     font-size: 1.5rem;
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 7b820fdaf7fc7a8ce0c2ebb361761286dc17368a
