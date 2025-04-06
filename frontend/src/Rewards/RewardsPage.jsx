@@ -102,7 +102,11 @@ function RewardsPage() {
 
   return (
     <div className="rewards-page">
-      <motion.div className="rewards-content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <motion.div className="rewards-content"       
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+      >
         <header className="rewards-header">
           <h1>Redeem Your Rewards</h1>
           <p>Use your points for rewards!</p>
@@ -112,7 +116,7 @@ function RewardsPage() {
         {loading ? (
           <p>Loading rewards...</p>
         ) : error ? (
-          <p>Error: {error}</p>
+          <p className='ErrorMessage'>Error: {error}</p>
         ) : rewards.length > 0 ? (
           <section className="rewards-list">
             {rewards.map((reward) => (
@@ -125,7 +129,7 @@ function RewardsPage() {
                 <h2>{reward.name}</h2>
                 <p>{reward.description}</p>
                 <p>{reward.points} pts</p>
-                <button onClick={() => handleRedeemReward(reward)}>Redeem</button>
+                <button className="redeem-btn" onClick={() => handleRedeemReward(reward)}>Redeem</button>
               </div>
             ))}
           </section>
