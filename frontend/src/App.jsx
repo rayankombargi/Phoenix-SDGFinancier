@@ -10,7 +10,7 @@ import Dashboard from './Dashboard/Dashboard';
 import BudgetPage from './Budget/BudgetPage';
 import ProfilePage from './Profile/ProfilePage';
 import RewardsPage from './Rewards/RewardsPage';
-import ChatBot from './components/Chatbot';
+import ChatBot from './Chatbot/Chatbot';
 import SignUpForm from './Profile/SignUpForm';
 import SignInForm from './Profile/SignInForm';
 
