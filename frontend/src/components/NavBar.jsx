@@ -8,7 +8,7 @@ function NavBar() {
   const token = localStorage.getItem('token');
   const isLoggedIn = Boolean(token);
 
-  // Modal state for protected links and join now
+  // Modal state for protected links and for "Join Now"
   const [showProtectedModal, setShowProtectedModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
 
@@ -18,11 +18,6 @@ function NavBar() {
     } else {
       setShowProtectedModal(true);
     }
-  };
-
-  const handleSignOut = () => {
-    localStorage.removeItem('token');
-    navigate('/');
   };
 
   return (
@@ -50,14 +45,11 @@ function NavBar() {
 
         <div className="navbar-action">
           {isLoggedIn ? (
-            <>
-              <Button
-                text="Profile"
-                className="navbar-profile-button"
-                onClick={() => navigate('/profile')}
-              />
-              <button onClick={handleSignOut}>Log Out</button>
-            </>
+            <Button
+              text="Profile"
+              className="navbar-profile-button"
+              onClick={() => navigate('/profile')}
+            />
           ) : (
             <Button
               text="Join Now"
