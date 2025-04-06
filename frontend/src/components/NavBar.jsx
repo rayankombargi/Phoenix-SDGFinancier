@@ -4,6 +4,7 @@ import './NavBar.css';
 import Button from '../Dashboard/Button';
 
 function NavBar() {
+  
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const isLoggedIn = Boolean(token);
