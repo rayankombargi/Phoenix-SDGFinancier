@@ -300,3 +300,18 @@
   from { opacity: 0; transform: scale(0.7); }
   to { opacity: 1; transform: scale(1); }
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction:column;
+    align-items: center;
+  }
+
+  .navbar-brand h2 {
+    font-size: 1.2rem;
+  }
+
+  .navbar-action {
+    margin-top: 1rem;
+  }
+}
