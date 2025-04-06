@@ -8,10 +8,24 @@
   padding: 1rem;
 }
 
+.budget-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure it takes the full height of the viewport */
+}
+
 .budget-page-content {
   /* Full width */
-  width: 100%;
-  margin: 0;
+  width: 65%;
+  margin: 0 auto; /* Center horizontally */
+  text-align: center; /* Center text content */
+}
+
+@media (max-width: 992px) {
+  .budget-page-content {
+    width: 80% ;
+  }
 }
 
 /* Page header styling */
@@ -24,10 +38,12 @@
   font-size: 2.5rem;
   color: var(--primary);
   margin-bottom: 0.5rem;
+  margin-top: 2rem;
 }
 
 .budget-page-header p {
   font-size: 1.2rem;
+  font-weight: 400;
   color: var(--secondary);
 }
 
@@ -52,6 +68,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.2s ease;
+  align-self: center;
 }
 
 .save-btn:hover {
@@ -61,7 +78,6 @@
 .save-btn:active {
   transform: translateY(1px);
 }
-
 
 .manager-section h2,
 .expenses-section h2 {

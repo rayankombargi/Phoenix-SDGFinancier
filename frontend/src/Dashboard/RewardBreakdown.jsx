@@ -31,9 +31,8 @@ function RewardBreakdown() {
       <p className="reward-subtitle">
         Below are your most recent expenses and their eco points. You have a total of <strong>{totalEcoPoints}</strong> points.
       </p>
-
+      <h1 className='events-list-title'>Recent Eco Points Earned</h1>
       <div className="reward-events">
-        <h3>Recent Eco Points Earned</h3>
         <ul className="events-list">
           {recentExpenses.length > 0 ? (
             recentExpenses.map((exp) => {

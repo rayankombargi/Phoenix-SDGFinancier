@@ -2,17 +2,11 @@
 
 /* Main container for the expenses manager */
 .expenses-manager {
-  /* Allow full width within parent */
   width: 100%;
-  /* Remove horizontal centering; keep bottom margin if needed */
   margin: 0 0 2rem 0;
-  /* Card-like styling */
   background: var(--light, #ffffff);
   border-radius: 16px;
-  box-shadow: var(--shadow, 0 4px 12px rgba(0, 0, 0, 0.15));
-  padding: 2rem;
   text-align: center;
-
   /* Existing layout properties */
   display: flex;
   flex-direction: column;
@@ -96,6 +90,7 @@
 .table-wrapper {
   overflow-x: auto;
   border-radius: 8px;
+  box-shadow: var(--shadow);
 }
 
 /* Main table styling */
@@ -119,6 +114,15 @@
   color: var(--primary);
 }
 
+.expense-table th {
+    display: flex;
+  justify-content: center;
+}
+.expense-table td {
+  display: flex;
+justify-content: center;
+}
+
 .expense-row:hover {
   background-color: #fafafa;
 }
@@ -126,6 +130,7 @@
 /* Action buttons in each row */
 .row-actions {
   display: flex;
+  justify-content: center;
   gap: 0.5rem;
 }
 

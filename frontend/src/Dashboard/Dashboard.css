@@ -1,6 +1,7 @@
 /* Dashboard.css */
 
 /* Global Theme Variables */
+
 :root {
   --primary: #2d3436;
   --secondary: #00b894;
@@ -25,6 +26,7 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--background);
+  background: var(--background);
 }
 
 .dashboard-content {
@@ -47,6 +49,7 @@
 
 .dashboard-header p {
   font-size: 1.2rem;
+  font-weight: 400;
   color: var(--secondary);
 }
 

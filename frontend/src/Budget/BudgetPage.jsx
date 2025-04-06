@@ -43,7 +43,7 @@ function BudgetPage() {
   return (
     <div className="budget-page">
       <motion.main
-        className="budget-page-content container"
+        className="budget-page-content"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -54,7 +54,6 @@ function BudgetPage() {
         </header>
 
         <section className="manager-section">
-          <h2>Set Your Budget Limits</h2>
           {loadingBudget ? (
             <p>Loading budget…</p>
           ) : (
@@ -64,7 +63,7 @@ function BudgetPage() {
             />
           )}
           <button className="save-btn" onClick={saveBudgets}>
-            Save Budget
+            Save
           </button>
         </section>
 

@@ -14,42 +14,40 @@ function RecentTransactions() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className="transactions-container">
-        <motion.table className="transactions-table">
-          <thead>
-            <tr className="transactions-row header-row">
-              <th className="transaction-cell">Date</th>
-              <th className="transaction-cell">Transaction</th>
-              <th className="transaction-cell">Amount ($)</th>
-              <th className="transaction-cell">Category</th>
+      <motion.table className="transactions-table">
+        <thead>
+          <tr className="transactions-row header-row">
+            <th className="transaction-cell">Date</th>
+            <th className="transaction-cell">Transaction</th>
+            <th className="transaction-cell">Amount ($)</th>
+            <th className="transaction-cell">Category</th>
+          </tr>
+        </thead>
+        <motion.tbody>
+          {expenses.map((transaction) => (
+            <motion.tr
+              key={transaction.id}
+              className="transactions-row"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              <td className="transaction-cell">{transaction.date}</td>
+              <td className="transaction-cell">{transaction.name}</td>
+              <td className="transaction-cell">{transaction.cost}</td>
+              <td className="transaction-cell">
+                {transaction.category ? transaction.category.name : 'Undefined'}
+              </td>
+            </motion.tr>
+          ))}
+          {expenses.length === 0 && (
+            <tr className="transactions-row">
+              <td colSpan="4" className="transaction-cell">
+                <div className="no-transaction">No recent transaction</div>
+              </td>
             </tr>
-          </thead>
-          <motion.tbody>
-            {expenses.map((transaction) => (
-              <motion.tr
-                key={transaction.id}
-                className="transactions-row"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.2 }}
-              >
-                <td className="transaction-cell">{transaction.date}</td>
-                <td className="transaction-cell">{transaction.name}</td>
-                <td className="transaction-cell">{transaction.cost}</td>
-                <td className="transaction-cell">
-                  {transaction.category ? transaction.category.name : 'Undefined'}
-                </td>
-              </motion.tr>
-            ))}
-            {expenses.length === 0 && (
-              <tr className="transactions-row">
-                <td colSpan="4" className="transaction-cell">
-                  <div className="no-transaction">No recent transaction</div>
-                </td>
-              </tr>
-            )}
-          </motion.tbody>
-        </motion.table>
-      </div>
+          )}
+        </motion.tbody>
+      </motion.table>
     </motion.section>
   );
 }

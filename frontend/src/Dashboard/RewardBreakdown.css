@@ -3,13 +3,14 @@
 /* Main container for the reward overview section */
 .reward-breakdown {
     background: var(--light);
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 16px;
     box-shadow: var(--shadow);
     text-align: center;
-    margin-top: 2rem;
     position: relative;
     overflow: hidden;
+    margin: 0 auto 2rem auto; /* Centers the container horizontally */
+    width: 50%;
   }
   
   .reward-title {
@@ -21,6 +22,7 @@
   
   .reward-subtitle {
     font-size: 1.1rem;
+    font-weight: 400;
     color: var(--secondary);
     margin-bottom: 1.5rem;
   }
@@ -87,9 +89,21 @@
     margin-bottom: 0.5rem;
     text-align: center;
   }
+
+  .events-list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
   
   .events-list {
     list-style: none;
+    border-radius: 16px;
+    background: var(--light);
+    box-shadow: var(--shadow);
     padding: 0;
     margin: 0;
   }
@@ -135,6 +149,7 @@
     border: none;
     border-radius: 25px;
     background-color: var(--secondary);
+    box-shadow: var(--shadow);
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -153,4 +168,38 @@
     --light: #8b0808;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
+
+  @media (max-width: 768px) {
+    .reward-breakdown {
+      width: 90%;
+    }
   
+    .reward-title {
+      font-size: 1.5rem;
+    }
+  
+    .reward-subtitle {
+      font-size: 1rem;
+    }
+  
+    .total-rewards {
+      font-size: 1.2rem;
+    }
+  
+    .reward-progress-bar {
+      max-width: 100%;
+    }
+  
+    .events-list-title {
+      font-size: 1.2rem;
+    }
+  
+    .event-item {
+      font-size: 0.8rem;
+    }
+  
+    .redeem-button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
