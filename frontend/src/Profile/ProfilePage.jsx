@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import './ProfilePage.css';
+// Import local images from assets folder
+import ecoHeroImg from '../assets/EcoHero.jpg.webp';
+import saverImg from '../assets/Saver.jpg';
 
 function ProfilePage() {
   const isLoggedIn = Boolean(localStorage.getItem('token'));
 
-  // Default profile picture (silhouette image)
+  // Default profile picture (silhouette) if needed
   const defaultAvatar =
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
-  // Profile state with default avatar
-  const [profile, setProfile] = useState({
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    location: 'New York, USA',
-    bio: 'Passionate about sustainability and finance.',
-    avatar: defaultAvatar,
-  });
+  // Initialize profile with data from localStorage if available; otherwise, use default
+  const initialProfile = {
+    name: localStorage.getItem('name') || 'John Doe',
+    email: localStorage.getItem('email') || 'johndoe@example.com',
+    location: localStorage.getItem('location') || 'New York, USA',
+    bio:
+      localStorage.getItem('bio') ||
+      'Passionate about sustainability and finance.',
+    avatar: localStorage.getItem('avatar') || defaultAvatar,
+  };
 
-  // Goals state (each goal has an optional 'achieved' flag)
+  const [profile, setProfile] = useState(initialProfile);
+
+  // Goals state; each goal has an optional "achieved" flag.
   const [goals, setGoals] = useState([
     { title: 'Save $5,000 by end of year', progress: '$2,500', achieved: false },
     { title: 'Donate $1,000 to charities', progress: '$300', achieved: false },
@@ -28,16 +35,14 @@ function ProfilePage() {
   const [isAddGoalModalOpen, setIsAddGoalModalOpen] = useState(false);
   const [isEditGoalModalOpen, setIsEditGoalModalOpen] = useState(false);
 
-  // New goal form state
+  // New goal form state for the Add Goal modal
   const [newGoal, setNewGoal] = useState({ title: '', progress: '' });
 
   // State for editing an existing goal
   const [editingGoalIndex, setEditingGoalIndex] = useState(null);
   const [editGoalData, setEditGoalData] = useState({ title: '', progress: '', achieved: false });
 
-  /* ----------------------------------
-     Profile Editing Handlers
-  ------------------------------------- */
+  // Handlers for profile editing (Edit Profile modal)
   const handleProfileInputChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
@@ -56,13 +61,16 @@ function ProfilePage() {
   const handleEditProfileSubmit = (e) => {
     e.preventDefault();
     console.log('Profile updated:', profile);
+    // You may also update localStorage here:
+    localStorage.setItem('name', profile.name);
+    localStorage.setItem('email', profile.email);
+    localStorage.setItem('location', profile.location);
+    localStorage.setItem('bio', profile.bio);
+    localStorage.setItem('avatar', profile.avatar);
     setIsEditProfileModalOpen(false);
-    // Update backend if needed
   };
 
-  /* ----------------------------------
-     Add Goal Handlers
-  ------------------------------------- */
+  // Handlers for adding a goal (Add Goal modal)
   const handleAddGoalSubmit = (e) => {
     e.preventDefault();
     if (newGoal.title && newGoal.progress) {
@@ -70,13 +78,10 @@ function ProfilePage() {
       setNewGoal({ title: '', progress: '' });
       setIsAddGoalModalOpen(false);
       console.log('Goal added:', newGoal);
-      // Update backend if needed
     }
   };
 
-  /* ----------------------------------
-     Edit Goal Handlers
-  ------------------------------------- */
+  // Handlers for editing an existing goal (Edit Goal modal)
   const openEditGoalModal = (index) => {
     setEditingGoalIndex(index);
     setEditGoalData(goals[index]);
@@ -98,7 +103,6 @@ function ProfilePage() {
     setGoals(updatedGoals);
     setIsEditGoalModalOpen(false);
     console.log('Goal updated:', editGoalData);
-    // Update backend if needed
   };
 
   const handleRemoveGoalInEdit = () => {
@@ -110,9 +114,6 @@ function ProfilePage() {
     }
   };
 
-  /* ----------------------------------
-     Logged Out Placeholder
-  ------------------------------------- */
   if (!isLoggedIn) {
     return (
       <div className="profile-page">
@@ -127,9 +128,6 @@ function ProfilePage() {
     );
   }
 
-  /* ----------------------------------
-     Main Render
-  ------------------------------------- */
   return (
     <div className="profile-page">
       {/* Top Banner */}
@@ -156,34 +154,21 @@ function ProfilePage() {
               <p className="profile-email">{profile.email}</p>
               <p className="profile-bio">{profile.bio}</p>
             </div>
-            <button
-              className="btn edit-profile-btn"
-              onClick={() => setIsEditProfileModalOpen(true)}
-            >
+            <button className="btn edit-profile-btn" onClick={() => setIsEditProfileModalOpen(true)}>
               Edit Profile
             </button>
           </div>
 
-          {/* Achievements */}
+          {/* Achievements Section */}
           <div className="profile-achievements glass-card">
             <h2>Achievements</h2>
             <div className="badges-grid">
-              {/* Square achievement #1 */}
               <div className="badge-card">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Eco Hero"
-                  className="badge-icon"
-                />
+                <img src={ecoHeroImg} alt="Eco Hero" className="badge-icon" />
                 <p className="badge-title">Eco Hero</p>
               </div>
-              {/* Square achievement #2 */}
               <div className="badge-card">
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt="Saver"
-                  className="badge-icon"
-                />
+                <img src={saverImg} alt="Saver" className="badge-icon" />
                 <p className="badge-title">Saver</p>
               </div>
             </div>
@@ -192,7 +177,7 @@ function ProfilePage() {
 
         {/* Right Column */}
         <div className="dashboard-right">
-          {/* Stats */}
+          {/* Stats Section */}
           <div className="profile-stats glass-card">
             <h2>My Stats</h2>
             <div className="stats-grid">
@@ -207,7 +192,7 @@ function ProfilePage() {
             </div>
           </div>
 
-          {/* Goals & Milestones */}
+          {/* Goals Section */}
           <div className="profile-goals glass-card">
             <h2>Goals & Milestones</h2>
             <div className="goals-list">
@@ -216,9 +201,7 @@ function ProfilePage() {
                   <div className="goal-text">
                     <h4>{goal.title}</h4>
                     <p>Progress: {goal.progress}</p>
-                    {goal.achieved && (
-                      <p className="goal-achieved">Achieved</p>
-                    )}
+                    {goal.achieved && <p className="goal-achieved">Achieved</p>}
                   </div>
                   <div className="goal-buttons">
                     <button className="btn goal-edit-btn" onClick={() => openEditGoalModal(idx)}>
@@ -228,11 +211,7 @@ function ProfilePage() {
                 </div>
               ))}
             </div>
-            <button
-              className="btn add-goal-btn"
-              style={{ marginTop: '1rem' }}
-              onClick={() => setIsAddGoalModalOpen(true)}
-            >
+            <button className="btn add-goal-btn" style={{ marginTop: '1rem' }} onClick={() => setIsAddGoalModalOpen(true)}>
               Add Goal
             </button>
           </div>
@@ -241,8 +220,8 @@ function ProfilePage() {
 
       {/* Edit Profile Modal */}
       {isEditProfileModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={() => setIsEditProfileModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Edit Profile</h3>
             <form onSubmit={handleEditProfileSubmit} className="modal-form">
               <label>Name:</label>
@@ -280,10 +259,7 @@ function ProfilePage() {
                 required
               ></textarea>
 
-              <label
-                htmlFor="avatar-upload"
-                style={{ cursor: 'pointer', color: 'var(--secondary)' }}
-              >
+              <label htmlFor="avatar-upload" style={{ cursor: 'pointer', color: 'var(--secondary)' }}>
                 Change Profile Picture
               </label>
               <input
@@ -294,11 +270,7 @@ function ProfilePage() {
                 style={{ display: 'none' }}
               />
 
-              <button
-                type="button"
-                className="btn modal-submit-btn"
-                onClick={handleRemoveAvatar}
-              >
+              <button type="button" className="btn modal-submit-btn" onClick={handleRemoveAvatar}>
                 Remove Profile Picture
               </button>
 
@@ -306,11 +278,7 @@ function ProfilePage() {
                 <button type="submit" className="btn modal-submit-btn">
                   Save Changes
                 </button>
-                <button
-                  type="button"
-                  className="btn modal-cancel-btn"
-                  onClick={() => setIsEditProfileModalOpen(false)}
-                >
+                <button type="button" className="btn modal-cancel-btn" onClick={() => setIsEditProfileModalOpen(false)}>
                   Cancel
                 </button>
               </div>
@@ -321,8 +289,8 @@ function ProfilePage() {
 
       {/* Add Goal Modal */}
       {isAddGoalModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={() => setIsAddGoalModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Add Goal</h3>
             <form onSubmit={handleAddGoalSubmit} className="modal-form">
               <label>Goal Title:</label>
@@ -347,11 +315,7 @@ function ProfilePage() {
                 <button type="submit" className="btn modal-submit-btn">
                   Add Goal
                 </button>
-                <button
-                  type="button"
-                  className="btn modal-cancel-btn"
-                  onClick={() => setIsAddGoalModalOpen(false)}
-                >
+                <button type="button" className="btn modal-cancel-btn" onClick={() => setIsAddGoalModalOpen(false)}>
                   Cancel
                 </button>
               </div>
@@ -362,8 +326,8 @@ function ProfilePage() {
 
       {/* Edit Goal Modal */}
       {isEditGoalModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={() => setIsEditGoalModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Edit Goal</h3>
             <form onSubmit={handleEditGoalSubmit} className="modal-form">
               <label>Goal Title:</label>
@@ -398,18 +362,10 @@ function ProfilePage() {
                 <button type="submit" className="btn modal-submit-btn">
                   Save Changes
                 </button>
-                <button
-                  type="button"
-                  className="btn modal-cancel-btn"
-                  onClick={() => setIsEditGoalModalOpen(false)}
-                >
+                <button type="button" className="btn modal-cancel-btn" onClick={() => setIsEditGoalModalOpen(false)}>
                   Cancel
                 </button>
-                <button
-                  type="button"
-                  className="btn modal-cancel-btn"
-                  onClick={handleRemoveGoalInEdit}
-                >
+                <button type="button" className="btn modal-cancel-btn" onClick={handleRemoveGoalInEdit}>
                   Remove Goal
                 </button>
               </div>

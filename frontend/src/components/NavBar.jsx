@@ -1,24 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import Button from '../Dashboard/Button';
 
 function NavBar() {
-  
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const isLoggedIn = Boolean(token);
+  
+  // Assume username and avatar are stored in localStorage; set defaults if not available
+  const username = localStorage.getItem('username') || 'User';
+  const defaultAvatar =
+    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+  const userAvatar = localStorage.getItem('avatar') || defaultAvatar;
 
-  // Modal state for protected links and for "Join Now"
-  const [showProtectedModal, setShowProtectedModal] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
 
-  const handleProtectedNavigation = (route) => {
-    if (isLoggedIn) {
-      navigate(route);
-    } else {
-      setShowProtectedModal(true);
-    }
+  const dropdownRef = useRef(null);
+
+  // Close dropdown if clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+  };
+
+  const handleProfileClick = () => {
+    setShowDropdown(false);
+    navigate('/profile');
+  };
+
+  const handleLogoutClick = () => {
+    setShowDropdown(false);
+    setShowLogoutConfirm(true);
+  };
+
+  const confirmLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('avatar');
+    navigate('/');
   };
 
   return (
@@ -30,66 +61,42 @@ function NavBar() {
 
         <div className="navbar-links">
           <button onClick={() => navigate('/')}>Home</button>
-          <button onClick={() => handleProtectedNavigation('/dashboard')}>
-            Dashboard
-          </button>
-          <button onClick={() => handleProtectedNavigation('/budget')}>
-            Budget
-          </button>
-          <button onClick={() => handleProtectedNavigation('/rewards')}>
-            Rewards
-          </button>
-          <button onClick={() => handleProtectedNavigation('/chatbot')}>
-            ChatBot
-          </button>
+          <button onClick={() => navigate('/dashboard')}>Dashboard</button>
+          <button onClick={() => navigate('/budget')}>Budget</button>
+          <button onClick={() => navigate('/rewards')}>Rewards</button>
+          <button onClick={() => navigate('/chatbot')}>ChatBot</button>
         </div>
 
         <div className="navbar-action">
           {isLoggedIn ? (
-            <Button
-              text="Profile"
-              className="navbar-profile-button"
-              onClick={() => navigate('/profile')}
-            />
+            <div className="profile-dropdown-container" ref={dropdownRef}>
+              <button className="profile-button" onClick={toggleDropdown}>
+                <img src={userAvatar} alt="Avatar" className="navbar-profile-avatar" />
+                <span className="username-text">{username}</span>
+                <span className="arrow">&#9662;</span>
+              </button>
+              <div className={`profile-dropdown ${showDropdown ? 'show' : ''}`}>
+                <button className="dropdown-item" onClick={handleProfileClick}>
+                  Profile
+                </button>
+                <button className="dropdown-item" onClick={handleLogoutClick}>
+                  Logout
+                </button>
+              </div>
+            </div>
           ) : (
-            <Button
-              text="Join Now"
-              className="navbar-join-button"
-              onClick={() => setShowJoinModal(true)}
-            />
+            // Use our updated join button styling
+            <button className="navbar-join-button" onClick={() => setShowJoinModal(true)}>
+              Join Now
+            </button>
           )}
         </div>
       </nav>
 
-      {/* Protected Navigation Modal */}
-      {showProtectedModal && (
-        <div className="signin-modal-overlay">
-          <div className="signin-modal-content">
-            <h3>Please Sign In</h3>
-            <p>You must be signed in to access this feature.</p>
-            <div className="signin-modal-buttons">
-              <Button
-                text="Sign In"
-                className="signin-modal-signin-button"
-                onClick={() => {
-                  navigate('/login');
-                  setShowProtectedModal(false);
-                }}
-              />
-              <Button
-                text="Cancel"
-                className="signin-modal-cancel-button"
-                onClick={() => setShowProtectedModal(false)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Join Now Modal */}
+      {/* Join Now Modal for Logged Out Users */}
       {showJoinModal && (
-        <div className="join-modal-overlay">
-          <div className="join-modal-content">
+        <div className="join-modal-overlay" onClick={() => setShowJoinModal(false)}>
+          <div className="join-modal-content" onClick={(e) => e.stopPropagation()}>
             <h3>Welcome!</h3>
             <p>Please choose an option to continue:</p>
             <div className="join-modal-buttons">
@@ -109,6 +116,24 @@ function NavBar() {
                   setShowJoinModal(false);
                 }}
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <div className="modal-overlay" onClick={() => setShowLogoutConfirm(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out from your account?</p>
+            <div className="modal-buttons">
+              <button className="btn modal-submit-btn" onClick={confirmLogout}>
+                Yes
+              </button>
+              <button className="btn modal-cancel-btn" onClick={() => setShowLogoutConfirm(false)}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>
