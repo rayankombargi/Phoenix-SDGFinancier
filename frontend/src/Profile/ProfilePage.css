@@ -1,6 +1,6 @@
 /* ProfilePage.css */
 
-/* Import a Google Font for modern typography */
+/* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
 :root {
@@ -12,8 +12,11 @@
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   --transition: 0.3s ease;
   --font-family: 'Poppins', sans-serif;
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --blur-amount: 15px;
 }
 
+/* Global Reset */
 *,
 *::before,
 *::after {
@@ -29,48 +32,293 @@ body {
   scroll-behavior: smooth;
 }
 
-/* All styles are now scoped within .profile-page */
+/* Profile Page Wrapper */
 .profile-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Banner Header */
-.profile-page .profile-banner {
+/* Banner */
+.profile-banner {
   position: relative;
-  height: 240px;
+  height: 220px;
   background: linear-gradient(135deg, var(--secondary), var(--accent));
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  color: var(--light);
+  overflow: hidden;
 }
-.profile-page .banner-overlay {
+.profile-banner .banner-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0,0,0,0.2);
 }
-.profile-page .profile-banner h1 {
+.profile-banner h1 {
   position: relative;
   z-index: 1;
-  color: var(--light);
-  font-size: 2.2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.profile-banner p {
+  position: relative;
+  z-index: 1;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+/* Dashboard Container */
+.profile-dashboard {
+  display: flex;
+  gap: 1.5rem;
+  width: 90%;
+  max-width: 1200px;
+  margin: -60px auto 2rem; /* Slight overlap with banner */
+  flex-wrap: wrap;
+}
+
+/* Left & Right Columns */
+.dashboard-left {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.dashboard-right {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Glass Card Look */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-amount));
+  box-shadow: var(--shadow);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Profile Info Card */
+.profile-info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.profile-info-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--secondary);
+}
+.profile-name {
+  font-size: 1.4rem;
+  margin: 0;
   font-weight: 700;
 }
-
-/* Specific Container for Profile Page Content */
-.profile-page .profile-container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto 2rem auto;  /* Centers content only in the profile page */
-  padding: 1rem;
+.profile-location {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-top: 4px;
+}
+.profile-contact {
+  font-size: 0.9rem;
+  color: var(--primary);
+  line-height: 1.4;
+}
+.edit-profile-btn {
+  align-self: flex-start;
+  background: var(--secondary);
+  color: var(--light);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background var(--transition);
+}
+.edit-profile-btn:hover {
+  background: var(--accent);
 }
 
-/* Placeholder for logged-out users */
-.profile-page .profile-placeholder {
+/* Stats Card */
+.profile-stats h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+.stats-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}
+.stat-card {
+  background-color: var(--light);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  width: 120px;
+  text-align: center;
+  transition: transform var(--transition);
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+.stat-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: var(--secondary);
+  font-weight: 600;
+}
+.stat-card p {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Achievements */
+.profile-achievements h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+.badges-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.badge-card {
+  background-color: var(--light);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  transition: transform var(--transition);
+}
+.badge-card:hover {
+  transform: translateY(-4px);
+}
+.badge-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill the square */
+}
+.badge-title {
+  position: relative;
+  z-index: 1;
+  background-color: var(--light);
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--secondary);
+  padding: 0.4rem 0;
+  margin: 0;
+}
+
+/* Goals & Milestones */
+.profile-goals h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+.goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.goal-item {
+  background-color: var(--light);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform var(--transition);
+}
+.goal-item:hover {
+  transform: translateY(-4px);
+}
+.goal-text {
+  flex: 1;
+}
+.goal-text h4 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  color: var(--secondary);
+  font-weight: 600;
+}
+.goal-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--primary);
+  opacity: 0.8;
+}
+.goal-achieved {
+  color: green;
+  font-weight: bold;
+  margin-top: 4px;
+}
+.goal-buttons {
+  margin-left: 1rem;
+}
+.goal-edit-btn {
+  background: var(--secondary);
+  color: var(--light);
+  border: none;
+  border-radius: 15px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.goal-edit-btn:hover {
+  background: var(--accent);
+}
+.add-goal-btn {
+  background-color: var(--secondary);
+  color: var(--light);
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  transition: background var(--transition);
+  margin-top: 1rem;
+}
+.add-goal-btn:hover {
+  background-color: var(--accent);
+}
+
+/* Logged-out Placeholder */
+.profile-placeholder {
   background-color: var(--light);
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -79,25 +327,19 @@ body {
   margin-top: 2rem;
   transition: transform var(--transition);
 }
-.profile-page .profile-placeholder:hover {
+.profile-placeholder:hover {
   transform: translateY(-4px);
 }
-.profile-page .profile-placeholder h2 {
+.profile-placeholder h2 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
-.profile-page .profile-placeholder p {
+.profile-placeholder p {
   font-size: 1rem;
   margin-bottom: 1.5rem;
 }
-.profile-page .placeholder-illustration {
-  max-width: 100%;
-  margin-bottom: 1.5rem;
-  border-radius: 8px;
-  object-fit: cover;
-}
-.profile-page .signin-btn {
+.signin-btn {
   background-color: var(--secondary);
   color: var(--light);
   margin-top: 1rem;
@@ -105,290 +347,135 @@ body {
   padding: 0.75rem 1.5rem;
   transition: background var(--transition);
 }
-.profile-page .signin-btn:hover {
+.signin-btn:hover {
   background-color: var(--accent);
-}
-.profile-page .signup-btn {
-  background-color: var(--accent);
-  color: var(--light);
-  margin-top: 1rem;
-  border-radius: 25px;
-  padding: 0.75rem 1.5rem;
-  transition: background var(--transition);
-}
-.profile-page .signup-btn:hover {
-  background-color: var(--secondary);
 }
 
-/* Profile Card */
-.profile-page .profile-card {
-  background-color: var(--light);
+/* Modal Styles with Zoom Animation and Blurred Background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal-content {
+  background: var(--light);
+  padding: 2rem;
   border-radius: 16px;
   box-shadow: var(--shadow);
-  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  animation: zoomIn 0.5s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  text-align: center;
+}
+
+.modal-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  transition: transform var(--transition);
-  margin-bottom: 2rem;
-}
-.profile-page .profile-card:hover {
-  transform: translateY(-4px);
+  gap: 0.75rem;
 }
 
-/* Avatar */
-.profile-page .avatar-section {
-  width: 140px;
-  height: 140px;
-  margin-bottom: 1rem;
-}
-.profile-page .profile-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--secondary);
-}
-
-/* Profile Info */
-.profile-page .profile-info {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-.profile-page .profile-name {
-  font-size: 1.8rem;
-  margin: 0.5rem 0;
+.modal-form label {
   font-weight: 600;
-}
-.profile-page .profile-email,
-.profile-page .profile-location,
-.profile-page .profile-bio {
-  font-size: 1rem;
-  margin: 0.25rem 0;
+  margin-bottom: 0.25rem;
 }
 
-/* Actions */
-.profile-page .profile-actions {
+.modal-form input,
+.modal-form textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.modal-buttons {
   display: flex;
   gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
 }
-.profile-page .btn {
-  padding: 0.75rem 1.5rem;
+
+.modal-submit-btn {
+  background: var(--secondary);
+  color: var(--light);
   border: none;
   border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
-  transition: background-color var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
 }
-.profile-page .edit-btn {
-  background-color: var(--secondary);
-  color: var(--light);
-}
-.profile-page .edit-btn:hover {
-  background-color: var(--accent);
+.modal-submit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
-/* Stats Section */
-.profile-page .profile-stats {
-  background-color: var(--light);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  transition: transform var(--transition);
-}
-.profile-page .profile-stats:hover {
-  transform: translateY(-4px);
-}
-.profile-page .profile-stats h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-}
-.profile-page .stats-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-}
-.profile-page .stat-card {
-  background-color: var(--background);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  width: 140px;
-  transition: transform var(--transition);
-}
-.profile-page .stat-card:hover {
-  transform: translateY(-4px);
-}
-.profile-page .stat-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: var(--secondary);
-  font-weight: 600;
-}
-.profile-page .stat-card p {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0;
+.modal-cancel-btn {
+  background: #dfe6e9;
   color: var(--primary);
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+.modal-cancel-btn:hover {
+  background: #b2bec3;
 }
 
-/* Achievements / Badges Section */
-.profile-page .profile-achievements {
-  background-color: var(--light);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  transition: transform var(--transition);
-}
-.profile-page .profile-achievements:hover {
-  transform: translateY(-4px);
-}
-.profile-page .profile-achievements h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.profile-page .badges-grid {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 1rem;
-}
-.profile-page .badge-card {
-  background-color: var(--background);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 1rem;
-  width: 120px;
-  text-align: center;
-  transition: transform var(--transition);
-}
-.profile-page .badge-card:hover {
-  transform: translateY(-4px);
-}
-.profile-page .badge-icon {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-}
-.profile-page .badge-title {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--secondary);
-}
-
-/* Goals / Milestones Section */
-.profile-page .profile-goals {
-  background-color: var(--light);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 2rem;
-  text-align: center;
-  transition: transform var(--transition);
-}
-.profile-page .profile-goals:hover {
-  transform: translateY(-4px);
-}
-.profile-page .profile-goals h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.profile-page .goals-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1rem auto;
-  max-width: 500px;
-  text-align: left;
-}
-.profile-page .goal-item {
-  background-color: var(--background);
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: var(--shadow);
-  transition: transform var(--transition);
-}
-.profile-page .goal-item:hover {
-  transform: translateY(-4px);
-}
-.profile-page .goal-item h4 {
-  margin: 0 0 0.25rem;
-  font-size: 1.1rem;
-  color: var(--secondary);
-  font-weight: 600;
-}
-.profile-page .goal-item p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--primary);
-  opacity: 0.8;
-}
-.profile-page .add-goal-btn {
-  background-color: var(--secondary);
-  color: var(--light);
-}
-.profile-page .add-goal-btn:hover {
-  background-color: var(--accent);
-}
-
-/* Responsive Adjustments */
+/* Responsive Layout */
 @media (max-width: 768px) {
-  .profile-page .profile-banner {
-    height: 200px;
+  .profile-dashboard {
+    margin: -40px auto 1rem;
+    flex-direction: column;
   }
-  .profile-page .banner-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
+  .dashboard-left, .dashboard-right {
+    flex: 1 1 100%;
   }
-  .profile-page .profile-banner h1 {
-    font-size: 1.8rem;
+  .profile-banner {
+    height: 180px;
   }
-  .profile-page .profile-container {
-    margin: -60px auto 1rem auto;
-  }
-  .profile-page .profile-avatar {
-    width: 100px;
-    height: 100px;
-  }
-  .profile-page .profile-name {
-    font-size: 1.4rem;
-  }
-  .profile-page .stat-card {
-    width: 120px;
-  }
-  .profile-page .badge-card {
-    width: 100px;
+  .profile-banner h1 {
+    font-size: 1.6rem;
   }
 }
 
 @media (max-width: 480px) {
-  .profile-page .profile-banner {
+  .profile-banner {
     height: 150px;
   }
-  .profile-page .profile-banner h1 {
-    font-size: 1.4rem;
+  .profile-banner h1 {
+    font-size: 1.2rem;
   }
-  .profile-page .profile-container {
-    margin: -50px auto 1rem auto;
-  }
-  .profile-page .profile-card {
-    padding: 1rem;
-  }
-  .profile-page .profile-avatar {
+  .avatar-section {
     width: 80px;
     height: 80px;
   }
-  .profile-page .profile-name {
-    font-size: 1.2rem;
+  .profile-name {
+    font-size: 1rem;
   }
 }
